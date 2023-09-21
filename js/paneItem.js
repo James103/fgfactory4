@@ -185,14 +185,24 @@ var TplPaneItem = function(item) {
                                     html += '<div class="row g-3">'
                                         html += '<div class="col-12">'
                                             html += '<div class="row gx-2 align-items-center">'
-                                                html += '<div class="col-auto lh-1">'
-                                                    html += '<img src="' + scenario.img + machineData.img + '" width="18px" height="18px" />'
+                                                html += '<div class="col-auto">'
+                                                    if (machineData.id != 'manual') html += '<button type="button" class="btn btn-link p-0 fs-normal" onclick="window.app.doClick(\'selectItem\', { itemId:\'' + machineData.id + '\' })">'
+                                                        html += '<div class="row gx-2 align-items-center">'
+                                                            html += '<div class="col-auto lh-1">'
+                                                                html += '<img src="' + scenario.img + machineData.img + '" width="18px" height="18px" />'
+                                                            html += '</div>'
+                                                            html += '<div class="col-auto">'
+                                                                html += '<span class="text-white">' + i18next.t(scenario.label + machineData.label) + '</span>'
+                                                            html += '</div>'
+                                                        html += '</div>'
+                                                    if (machineData.id != 'manual') html += '</button>'
                                                 html += '</div>'
-                                                html += '<div class="col">'
-                                                    html += '<span class="text-white">' + i18next.t(scenario.label + machineData.label) + '</span>'
+                                                let availableCount = window.app.game.getAvailableCount(machine.machineId)
+                                                html += '<div id="machine-availableCount-' + machine.id + '" class="' + (availableCount > 0 ? 'col-auto' : 'd-none') + '">'
+                                                    if (availableCount > 0) html += '<span class="badge text-bg-success">' + formatNumber(availableCount) + '</span>'
                                                 html += '</div>'
                                                 if (machineData.id != 'manual') {
-                                                    html += '<div class="col-auto">'
+                                                    html += '<div class="col text-end">'
                                                         html += '<small class="opacity-50">x</small> <span id="machine-count-' + machine.id + '">' + formatNumber(machine.count) + '</span>'
                                                     html += '</div>'
                                                 }
@@ -227,21 +237,19 @@ var TplPaneItem = function(item) {
                                                 html += '<div class="col-auto small">'
                                                     html += '<i class="fas fa-long-arrow-alt-right"></i>'
                                                 html += '</div>'
-                                                for (let id in machine.outputs) {
-                                                    let outputItem = game.getItem(id)
-                                                    html += '<div class="col-auto">'
-                                                        html += '<div class="border py-1 px-2">'
-                                                            html += '<div class="row gx-2 align-items-center">'
-                                                                html += '<div class="col-auto lh-1">'
-                                                                    html += '<img src="' + scenario.img + outputItem.img + '" width="16px" height="16px" />'
-                                                                html += '</div>'
-                                                                html += '<div class="col text-end small">'
-                                                                    html += '<span id="machine-' + machine.id + '-outputCount-' + id + '">' + formatNumber((machine.count > 0 ? machine.count : 1) * machine.outputs[id]) + '</span>'
-                                                                html += '</div>'
+                                                let outputItem = game.getItem(machine.outputId)
+                                                html += '<div class="col-auto">'
+                                                    html += '<div class="border py-1 px-2">'
+                                                        html += '<div class="row gx-2 align-items-center">'
+                                                            html += '<div class="col-auto lh-1">'
+                                                                html += '<img src="' + scenario.img + outputItem.img + '" width="16px" height="16px" />'
+                                                            html += '</div>'
+                                                            html += '<div class="col text-end small">'
+                                                                html += '<span id="machine-' + machine.id + '-outputCount">' + formatNumber((machine.count > 0 ? machine.count : 1) * machine.outputCount) + '</span>'
                                                             html += '</div>'
                                                         html += '</div>'
                                                     html += '</div>'
-                                                }
+                                                html += '</div>'
                                             html += '</div>'
                                         html += '</div>'
                                         html += '<div class="col-12">'
@@ -278,7 +286,7 @@ var TplPaneItem = function(item) {
                                                         html += '</div>'
                                                     html += '</div>'
                                                 }
-                                                html += '<div class="col-auto text-end" style="width:60px;">'
+                                                html += '<div class="col-auto text-end" style="width:' + (machine.machineId == 'manual' ? '85' : '60') + 'px;">'
                                                     html += '<small id="machine-' + machine.id + '-remainingSeconds">' + formatTime(machine.remainingSeconds) + '</small>'
                                                     html += '<div class="progress" style="height:3px;">'
                                                         html += '<div id="machine-' + machine.id + '-progress" class="progress-bar bg-success" style="width:' + machine.getProgress() + '%;"></div>'
@@ -306,6 +314,40 @@ var TplPaneItem = function(item) {
                         })
                     html += '</div>'
                 html += '</div>'
+            }
+            if (item.category == 'machine') {
+                machines = window.app.game.currentMachines.filter(machine => machine.machineId == item.id && machine.count > 0)
+                if (machines.length > 0) {
+                    html += '<div class="p-2">'
+                        html += '<div class="card card-body">'
+                            html += '<div class="row g-3">'
+                                html += '<div class="col-12">'
+                                    html += '<span class="text-white">' + i18next.t('word_assignment') + '</span>'
+                                html += '</div>'
+                                html += '<div class="col-12">'
+                                    html += '<div class="list-group list-group-flush">'
+                                        machines.forEach(machine => {
+                                            html += '<button type="button" class="list-group-item list-group-item-action" onclick="window.app.doClick(\'selectItem\', { itemId:\'' + machine.outputId + '\' })">'
+                                                html += '<div class="row gx-2 align-items-center">'
+                                                    html += '<div class="col-auto">'
+                                                        let outputElem = game.getItem(machine.outputId)
+                                                        html += '<img src="' + scenario.img + outputElem.img + '" width="16px" height="16px" />'
+                                                    html += '</div>'
+                                                    html += '<div class="col">'
+                                                        html += '<span class="text-white">' + i18next.t(scenario.label + outputElem.label) + '</span>'
+                                                    html += '</div>'
+                                                    html += '<div class="col-auto">'
+                                                        html += '<small class="opacity-50">x</small> <span class="text-white">' + formatNumber(machine.count) + '</span>'
+                                                    html += '</div>'
+                                                html += '</div>'
+                                            html += '</button>'
+                                        })
+                                    html += '</div>'
+                                html += '</div>'
+                            html += '</div>'
+                        html += '</div>'
+                    html += '</div>'
+                }
             }
         html += '</div>'
     }
@@ -361,7 +403,7 @@ class PaneItem {
         style = 'text-normal'
         if (value > 0) style = 'text-white'
         if (node.className != style) node.className = style
-                    
+        
         //---
         if (this.item.category == 'machine') {
             
@@ -512,12 +554,26 @@ class PaneItem {
                     style = 'text-normal'
                     if (value > 0) style = 'text-white'
                     if (node.className != style) node.className = style
+                    
+                    // Machine available count
+                    //---
+                    node = document.getElementById('machine-availableCount-' + machine.id)
+                    //---
+                    value = window.app.game.getAvailableCount(machine.machineId)
+                    //---                
+                    html = ''
+                    if (value > 0) html = '<span class="badge text-bg-success">' + formatNumber(value) + '</span>'
+                    if (node.innerHTML != html) node.innerHTML = html
+                    //---
+                    style = 'd-none'
+                    if (value > 0) style = 'col-auto'
+                    if (node.className != style) node.className = style
                 }
                 
                 //---
                 if (machine.inputs) {
                     for (let id in machine.inputs) {
-                        let inputItem = window.app.game.getItem(id)
+                        let availableCount = window.app.game.getAvailableCount(id)
                         
                         // Machine input count
                         //---
@@ -528,29 +584,25 @@ class PaneItem {
                         html = formatNumber(value)
                         if (node.innerHTML != html) node.innerHTML = html
                         //---
-                        style = 'text-white'
-                        if (value > inputItem.count) style = 'text-danger'
+                        style = 'text-white'                        
+                        if (value > availableCount) style = 'text-danger'
                         if (node.className != style) node.className = style
                     }
                 }
                 
+                // Machine output count
                 //---
-                for (let id in machine.outputs) {
-                    let outputItem = window.app.game.getItem(id)
-                        
-                    // Machine output count
-                    //---
-                    node = document.getElementById('machine-' + machine.id + '-outputCount-' + id)
-                    //---
-                    value = (machine.count > 0 ? machine.count : 1) * machine.outputs[id]
-                    //---
-                    html = formatNumber(value)
-                    if (node.innerHTML != html) node.innerHTML = html
-                    //---
-                    style = 'text-white'
-                    if (outputItem.count >= outputItem.storage) style = 'text-danger'
-                    if (node.className != style) node.className = style
-                }
+                node = document.getElementById('machine-' + machine.id + '-outputCount')
+                //---
+                let outputItem = window.app.game.getItem(machine.outputId)
+                value = (machine.count > 0 ? machine.count : 1) * machine.outputCount
+                //---
+                html = formatNumber(value)
+                if (node.innerHTML != html) node.innerHTML = html
+                //---
+                style = 'text-white'
+                if (outputItem.count >= outputItem.storage) style = 'text-danger'
+                if (node.className != style) node.className = style
                 
                 //---
                 if (machine.machineId != 'manual') {
@@ -596,13 +648,12 @@ class PaneItem {
                 value = machine.remainingSeconds
                 //---
                 html = formatTime(machine.remainingSeconds)
+                if (machine.machineId == 'manual') html += ' - ' + (machine.limit - machine.limitCount)
                 if (node.innerHTML != html) node.innerHTML = html
                 //---
                 let full = false
-                for (let id in machine.outputs) {
-                    let outputElem = window.app.game.getItem(id)
-                    if (outputElem.count >= outputElem.storage) full = true
-                }
+                let outputElem = window.app.game.getItem(machine.outputId)
+                if (outputElem.count >= outputElem.storage) full = true
                 //---
                 style = 'text-normal'
                 if (machine.status == 'wait' || full) style = 'text-danger'

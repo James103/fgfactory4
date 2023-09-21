@@ -51,7 +51,7 @@ class GameItem {
         this.upgradeCount = 0
         //---
         this.totalMachineCount = 0
-        this.machines = game.currentMachines.filter(machine => machine.outputs && machine.outputs[this.id] != null)        
+        this.machines = game.currentMachines.filter(machine => machine.outputId == this.id)
         //---
         this.prod = 0
         this.consu = 0
@@ -102,8 +102,8 @@ class GameMachine {
         //---
         this.seconds = recipeData.seconds / machineData.speed
         //---
-        this.outputs = {}
-        for (let id in recipeData.outputs) this.outputs[id] = recipeData.outputs[id]
+        this.outputId = recipeData.outputId
+        this.outputCount = recipeData.outputCount
         //---
         if (recipeData.inputs) {
             this.inputs = {}
@@ -144,10 +144,8 @@ class GameMachine {
         if (data.remainingSeconds != null) this.remainingSeconds = data.remainingSeconds
         //---
         if (this.machineId != 'manual' && this.count > 0 || (this.machineId == 'manual' && this.status != 'paused')) {
-            for (let id in this.outputs) {
-                let outputElem = this.game.getItem(id)
-                outputElem.totalMachineCount += this.count
-            }
+            let outputElem = this.game.getItem(this.outputId)
+            outputElem.totalMachineCount += this.count
         }
     }
     //---
@@ -342,10 +340,8 @@ class Game {
             }
             if (machine.status == 'inprogress') {
                 //---
-                for (let id in machine.outputs) {
-                    let outputItem = this.getItem(id)
-                    if (outputItem.count >= outputItem.storage) return
-                }
+                let outputItem = this.getItem(machine.outputId)
+                if (outputItem.count >= outputItem.storage) return
                 //---
                 if (seconds >= machine.remainingSeconds) {
                     //---
@@ -368,26 +364,23 @@ class Game {
                             }
                         }
                     }
-                    if (potential > 0 && machine.limits && machine.limitCount + potential > machine.limit) potential = machine.limit - machine.limitCount
+                    if (potential > 0 && machine.limits && machine.limitCount + potential >= machine.limit) potential = machine.limit - machine.limitCount
                     //---
-                    for (let id in machine.outputs) {
+                    let outputElem = this.getItem(machine.outputId)
+                    outputElem.count += machine.outputCount * machine.count * (1 + potential)
+                    //---
+                    if (outputElem.goal && outputElem.count >= outputElem.goal) {
                         //---
-                        let outputElem = this.getItem(id)
-                        outputElem.count += machine.outputs[id] * machine.count * (1 + potential)
+                        outputElem.completed = true
+                        outputElem.totalMachineCount -= machine.count
                         //---
-                        if (outputElem.goal && outputElem.count >= outputElem.goal) {
-                            //---
-                            outputElem.completed = true
-                            outputElem.totalMachineCount -= machine.count
-                            //---
-                            machine.count = 0
-                            machine.status = 'paused'
-                            machine.limitCount = 0
-                            machine.remainingSeconds = machine.seconds
-                            //---
-                            this.refreshUnlocked()
-                            window.app.selectedScreen.display()
-                        }
+                        machine.count = 0
+                        machine.status = 'paused'
+                        machine.limitCount = 0
+                        machine.remainingSeconds = machine.seconds
+                        //---
+                        this.refreshUnlocked()
+                        window.app.selectedScreen.display()
                     }
                     //---
                     if (machine.limits) machine.limitCount += 1 + potential
@@ -439,9 +432,7 @@ class Game {
                 }
             }
             //---
-            for (let id in machine.outputs) {
-                temp[id].prod += (machine.outputs[id] * machine.count) / machine.seconds
-            }
+            temp[machine.outputId].prod += (machine.outputCount * machine.count) / machine.seconds
         })
         //---
         items.forEach(item => {
@@ -517,10 +508,8 @@ class Game {
             machine.count += increaseCount
             //---
             if (machine.machineId != 'manual') {
-                for (let id in machine.outputs) {
-                    let outputElem = this.getItem(id)
-                    outputElem.totalMachineCount += increaseCount
-                }
+                let outputElem = this.getItem(machine.outputId)
+                outputElem.totalMachineCount += increaseCount
             }
         }
     }
@@ -544,10 +533,8 @@ class Game {
             machine.count -= decreaseCount
             //---
             if (machine.machineId != 'manual') {
-                for (let id in machine.outputs) {
-                    let outputElem = this.getItem(id)
-                    outputElem.totalMachineCount -= decreaseCount
-                }
+                let outputElem = this.getItem(machine.outputId)
+                outputElem.totalMachineCount -= decreaseCount
             }
         }
     }
@@ -585,17 +572,17 @@ class Game {
         let machine = this.getMachine(machineId)
         if (this.canStopMachine(machine)) {
             //---
-            machine.status = 'paused'
-            machine.limitCount = 0
-            machine.remainingSeconds = machine.seconds
-            //---
-            if (machine.inputs) {
+            if (machine.status == 'inprogress' && machine.inputs) {
                 for (let id in machine.inputs) {
                     let inputItem = this.getItem(id)
                     inputItem.count += machine.inputs[id] * machine.count
                     if (inputItem.count > inputItem.storage) inputItem.count = inputItem.storage
                 }
             }
+            //---
+            machine.status = 'paused'
+            machine.limitCount = 0
+            machine.remainingSeconds = machine.seconds
         }
     }
 }

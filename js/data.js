@@ -3,12 +3,12 @@ var DATA = {
     //---
     scenarios:[
         //---
-        {   id:'fto1', img:'img/fto1/', label:'fto1_', initSubTab:'items', initItem:'coal',
+        {   id:'fto1', img:'img/fto1/', label:'fto1_', initSubTab:'items', initItem:'stone',
             subTabs:[
                 //---
                 { id:'items', label:'items', categories:[ 'stone', 'iron', 'copper', 'product' ] },
-                { id:'machines', label:'machines', categories:[ 'energy', 'machine' ] },
-                { id:'techs', label:'techs', categories:[ 'science', 'tech' ] },
+                { id:'production', label:'production', categories:[ 'energy', 'machine' ] },
+                { id:'research', label:'research', categories:[ 'science', 'tech' ] },
             ],
             items:[
                 //---
@@ -47,36 +47,36 @@ var DATA = {
             ],
             recipes:[
                 //---
-                { id:'stone', machines:[ 'drill', 'manual' ], seconds:1, outputs:{ 'stone':1 } },
+                { id:'stone', machines:[ 'drill', 'manual' ], seconds:1, outputId:'stone', outputCount:1 },
                 //---
-                { id:'coal', machines:[ 'drill', 'manual' ], seconds:1, outputs:{ 'coal':1 } },
-                { id:'water', machines:[ 'pump' ], seconds:1, outputs:{ 'water':1200 } },
-                { id:'steam', machines:[ 'boiler' ], seconds:1, outputs:{ 'steam':60 }, inputs:{ 'water':60 } },
-                { id:'coal-energy', machines:[ 'steam-engine' ], seconds:1, outputs:{ 'electricity':900 } },
+                { id:'coal', machines:[ 'drill', 'manual' ], seconds:1, outputId:'coal', outputCount:1 },
+                { id:'water', machines:[ 'pump' ], seconds:1, outputId:'water', outputCount:1200 },
+                { id:'steam', machines:[ 'boiler' ], seconds:1, outputId:'steam', outputCount:60, inputs:{ 'water':60 } },
+                { id:'coal-energy', machines:[ 'steam-engine' ], seconds:1, outputId:'electricity', outputCount:900 },
                 //---
-                { id:'iron-ore', machines:[ 'drill', 'manual'  ], seconds:1, outputs:{ 'iron-ore':1 } },
-                { id:'iron-plate', machines:[ 'furnace' ], seconds:3.2, outputs:{ 'iron-plate':1 }, inputs:{ 'iron-ore':1 } },
-                { id:'pipe', machines:[ 'assembler', 'manual' ], seconds:0.5, outputs:{ 'pipe':1 }, inputs:{ 'iron-plate':1 } },
-                { id:'gear', machines:[ 'assembler', 'manual' ], seconds:0.5, outputs:{ 'gear':1 }, inputs:{ 'iron-plate':2 } },
-                { id:'belt', machines:[ 'assembler', 'manual' ], seconds:0.5, outputs:{ 'belt':2 }, inputs:{ 'gear':1, 'iron-plate':1 } },
+                { id:'iron-ore', machines:[ 'drill', 'manual'  ], seconds:1, outputId:'iron-ore', outputCount:1 },
+                { id:'iron-plate', machines:[ 'furnace' ], seconds:3.2, outputId:'iron-plate', outputCount:1, inputs:{ 'iron-ore':1 } },
+                { id:'pipe', machines:[ 'assembler', 'manual' ], seconds:0.5, outputId:'pipe', outputCount:1, inputs:{ 'iron-plate':1 } },
+                { id:'gear', machines:[ 'assembler', 'manual' ], seconds:0.5, outputId:'gear', outputCount:1, inputs:{ 'iron-plate':2 } },
+                { id:'belt', machines:[ 'assembler', 'manual' ], seconds:0.5, outputId:'belt', outputCount:2, inputs:{ 'gear':1, 'iron-plate':1 } },
                 //---
-                { id:'copper-ore', machines:[ 'drill', 'manual' ], seconds:1, outputs:{ 'copper-ore':1 } },
-                { id:'copper-plate', machines:[ 'furnace' ], seconds:3.2, outputs:{ 'copper-plate':1 }, inputs:{ 'copper-ore':1 } },
-                { id:'copper-cable', machines:[ 'assembler', 'manual' ], seconds:0.5, outputs:{ 'copper-cable':2 }, inputs:{ 'copper-plate':1 } },
+                { id:'copper-ore', machines:[ 'drill', 'manual' ], seconds:1, outputId:'copper-ore', outputCount:1 },
+                { id:'copper-plate', machines:[ 'furnace' ], seconds:3.2, outputId:'copper-plate', outputCount:1, inputs:{ 'copper-ore':1 } },
+                { id:'copper-cable', machines:[ 'assembler', 'manual' ], seconds:0.5, outputId:'copper-cable', outputCount:2, inputs:{ 'copper-plate':1 } },
                 //---
-                { id:'circuit', machines:[ 'assembler', 'manual' ], seconds:0.5, outputs:{ 'circuit':1 }, inputs:{ 'copper-cable':3, 'iron-plate':1 } },
+                { id:'circuit', machines:[ 'assembler', 'manual' ], seconds:0.5, outputId:'circuit', outputCount:1, inputs:{ 'copper-cable':3, 'iron-plate':1 } },
                 //---
-                { id:'furnace', machines:[ 'manual' ], seconds:0.5, outputs:{ 'furnace':1 }, inputs:{ 'stone':5 } },
-                { id:'drill', machines:[ 'manual' ], seconds:2, outputs:{ 'drill':1 }, inputs:{ 'gear':3, 'iron-plate':3, 'furnace':1 } },
-                { id:'pump', machines:[ 'manual' ], seconds:0.5, outputs:{ 'pump':1 }, inputs:{ 'circuit':2, 'gear':1, 'pipe':1 } },
-                { id:'boiler', machines:[ 'manual' ], seconds:0.5, outputs:{ 'boiler':1 }, inputs:{ 'pipe':4, 'furnace':1 } },
-                { id:'steam-engine', machines:[ 'manual' ], seconds:0.5, outputs:{ 'steam-engine':1 }, inputs:{ 'gear':8, 'iron-plate':10, 'pipe':5 } },
-                { id:'lab', machines:[ 'manual' ], seconds:2, outputs:{ 'lab':1 }, inputs:{ 'circuit':10, 'gear':10, 'belt':4 } },
-                { id:'assembler', machines:[ 'manual' ], seconds:0.5, outputs:{ 'assembler':1 }, inputs:{ 'circuit':3, 'gear':5, 'iron-plate':9 } },
+                { id:'furnace', machines:[ 'manual' ], seconds:0.5, outputId:'furnace', outputCount:1, inputs:{ 'stone':5 } },
+                { id:'drill', machines:[ 'manual' ], seconds:2, outputId:'drill', outputCount:1, inputs:{ 'gear':3, 'iron-plate':3, 'furnace':1 } },
+                { id:'pump', machines:[ 'manual' ], seconds:0.5, outputId:'pump', outputCount:1, inputs:{ 'circuit':2, 'gear':1, 'pipe':1 } },
+                { id:'boiler', machines:[ 'manual' ], seconds:0.5, outputId:'boiler', outputCount:1, inputs:{ 'pipe':4, 'furnace':1 } },
+                { id:'steam-engine', machines:[ 'manual' ], seconds:0.5, outputId:'steam-engine', outputCount:1, inputs:{ 'gear':8, 'iron-plate':10, 'pipe':5 } },
+                { id:'lab', machines:[ 'manual' ], seconds:2, outputId:'lab', outputCount:1, inputs:{ 'circuit':10, 'gear':10, 'belt':4 } },
+                { id:'assembler', machines:[ 'manual' ], seconds:0.5, outputId:'assembler', outputCount:1, inputs:{ 'circuit':3, 'gear':5, 'iron-plate':9 } },
                 //---
-                { id:'red-pack', machines:[ 'assembler', 'manual' ], seconds:5, outputs:{ 'red-pack':1 }, inputs:{ 'copper-plate':1, 'gear':1 } },
+                { id:'red-pack', machines:[ 'assembler', 'manual' ], seconds:5, outputId:'red-pack', outputCount:1, inputs:{ 'copper-plate':1, 'gear':1 } },
                 //---
-                { id:'automation', machines:[ 'lab' ], seconds:10, outputs:{ 'automation':1 }, inputs:{ 'red-pack':1 } },
+                { id:'automation', machines:[ 'lab' ], seconds:10, outputId:'automation', outputCount:1, inputs:{ 'red-pack':1 } },
             ],
         },
     ]

@@ -87,6 +87,8 @@ a:hover { color: var(--bs-link-hover-color); }
 
 .small, small { font-size: var(--bs-font-size-small); }
 
+.fs-normal { font-size: var(--bs-body-font-size)!important; }
+
 [data-bs-toggle="collapse"]:hover { cursor: pointer; }
 
 .btn {
@@ -358,8 +360,8 @@ a:hover { color: var(--bs-link-hover-color); }
     --bs-list-group-active-color: #000;
     --bs-list-group-active-bg: var(--bs-primary);
     --bs-list-group-active-border-color: var(--bs-primary);
-    --bs-list-group-action-hover-color: var(--bs-primary);
-    --bs-list-group-action-hover-bg: transparent;
+    --bs-list-group-action-hover-color: inherit;
+    --bs-list-group-action-hover-bg: var(--bs-light-dark);
     --bs-list-group-action-active-bg: transparent;
     --bs-list-group-action-active-color: var(--bs-primary);
 }

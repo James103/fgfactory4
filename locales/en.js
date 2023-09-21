@@ -69,6 +69,7 @@ var en_translations = {
     'word_speed': 'Speed',
     'word_energy': 'Energy',
     'word_goal': 'Goal',
+    'word_assignment': 'Assignment',
     
     /* SCENARIO fto1 */
 
@@ -77,18 +78,18 @@ var en_translations = {
     'fto1_desc': 'Scenario inspired by the <span class="text-white">Factorio</span> game in normal mode.',    
     //---
     'fto1_items': 'Items',
-    'fto1_machines': 'Machines',
-    'fto1_techs': 'Techs',
+    'fto1_production': 'Production',
+    'fto1_research': 'Research',
     //---
     'fto1_stone': 'Stone',
     //---
     'fto1_iron': 'Iron',
     'fto1_copper': 'Copper',
-    'fto1_product': 'Product',
+    'fto1_product': 'Products',
     'fto1_energy': 'Energy',
     'fto1_machine': 'Machines',
-    'fto1_science': 'Science',
-    'fto1_tech': 'Tech',
+    'fto1_science': 'Science packs',
+    'fto1_tech': 'Techs',
     //---
     'fto1_iron-ore': 'Iron ore',
     'fto1_iron-plate': 'Iron plate',
