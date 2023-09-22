@@ -96,7 +96,8 @@ class GameMachine {
         this.id = machineData.id + '-' + recipeData.id
         this.machineId = machineData.id
         //---
-        this.limits = machineData.limits
+        let outputData = game.currentScenario.getItem(recipeData.outputId)
+        this.limits = outputData.limits
         if (this.limits) this.limit = this.limits[0]
         this.limitCount = 0
         //---
@@ -364,7 +365,7 @@ class Game {
                             }
                         }
                     }
-                    if (potential > 0 && machine.limits && machine.limitCount + potential >= machine.limit) potential = machine.limit - machine.limitCount
+                    if (potential > 0 && machine.limits && machine.limitCount + potential >= machine.limit) potential = machine.limit - machine.limitCount - 1
                     //---
                     let outputElem = this.getItem(machine.outputId)
                     outputElem.count += machine.outputCount * machine.count * (1 + potential)

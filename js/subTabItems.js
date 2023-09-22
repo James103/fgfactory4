@@ -31,8 +31,10 @@ var TplSubTabItems = function(data) {
                                     html += '<div class="col-auto">'
                                         html += '<span id="item-' + item.id + '-count" class="badge bg-light">' + formatNumber(item.count) + '</span>'
                                     html += '</div>'
-                                    html += '<div id="item-' + item.id + '-working" class="col-auto">'
-                                    html += '</div>'
+                                    if (!item.completed) {
+                                        html += '<div id="item-' + item.id + '-working" class="col-auto">'
+                                        html += '</div>'
+                                    }
                                 html += '</div>'
                             html += '</button>'
                         html += '</div>'
@@ -98,11 +100,11 @@ class SubTabItems {
                         html = '<i class="fas fa-check-circle text-success" aria-hidden="true"></i>'
                         if (node.innerHTML != html) node.innerHTML = html
                         //---
-                        style = 'badge'
+                        style = ''
                         if (node.className != style) node.className = style
                     }
                     else {
-                        
+                            
                         // Item working
                         //---
                         node = document.getElementById('item-' + item.id + '-working')

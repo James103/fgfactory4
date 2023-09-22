@@ -34,6 +34,7 @@ var TplPaneItem = function(item) {
                 html += '<div class="col-auto">'
                     html += '<span id="selectedItem-count">' + formatNumber(item.count) + '</span>'
                     if (item.storage != Infinity) html += ' / <span id="selectedItem-storage">' + formatNumber(item.storage) + '</span>'
+                    else if (item.goal) html += ' / <span>' + formatNumber(item.goal) + '</span>'
                 html += '</div>'
             }
         html += '</div>'
@@ -75,7 +76,7 @@ var TplPaneItem = function(item) {
                                         html += '</div>'
                                     }
                                 }
-                                else if (item.category == 'tech') {
+                                else if (item.category == 'tech' || item.category == 'mission') {
                                     html += '<div class="col-12">'
                                         html += '<div class="row gx-2 align-items-center">'
                                             html += '<div class="col small">'
@@ -83,16 +84,6 @@ var TplPaneItem = function(item) {
                                             html += '</div>'
                                             html += '<div class="col-auto">'
                                                 html += '<span id="selectedItem-prod">' + formatNumber(item.prod) + '</span> <small class="opacity-50">/s</small>'
-                                            html += '</div>'
-                                        html += '</div>'
-                                    html += '</div>'
-                                    html += '<div class="col-12">'
-                                        html += '<div class="row gx-2 align-items-center">'
-                                            html += '<div class="col small">'
-                                                html += '<span>' + i18next.t('word_goal') + '</span>'
-                                            html += '</div>'
-                                            html += '<div class="col-auto">'
-                                                html += '<span class="text-white">' + formatNumber(item.goal) + '</span>'
                                             html += '</div>'
                                         html += '</div>'
                                     html += '</div>'
@@ -277,7 +268,7 @@ var TplPaneItem = function(item) {
                                                         html += '</button>'
                                                     html += '</div>'
                                                 }
-                                                else {
+                                                else if (machine.limits.length > 1) {
                                                     html += '<div class="col-auto">'
                                                         html += '<div class="btn-group" role="group">'
                                                             for (let limit of machine.limits) {
@@ -453,32 +444,36 @@ class PaneItem {
             if (value > 0) style = 'text-white'
             if (node.className != style) node.className = style
             
-            // Item consumption
             //---
-            node = document.getElementById('selectedItem-consu')
-            //---
-            value = this.item.consu
-            //---
-            html = formatNumber(value)
-            if (node.innerHTML != html) node.innerHTML = html
-            //---
-            style = 'text-normal'
-            if (value != 0) style = 'text-white'
-            if (node.className != style) node.className = style
-            
-            // Item balance
-            //---
-            node = document.getElementById('selectedItem-balance')
-            //---
-            value = this.item.balance
-            //---
-            html = (value > 0 ? '+' : '') + formatNumber(value)
-            if (node.innerHTML != html) node.innerHTML = html
-            //---
-            style = 'text-normal'
-            if (value > 0) style = 'text-success'
-            else if (value < 0) style = 'text-danger'
-            if (node.className != style) node.className = style
+            if (this.item.category != 'tech' && this.item.category != 'mission') {
+                
+                // Item consumption
+                //---
+                node = document.getElementById('selectedItem-consu')
+                //---
+                value = this.item.consu
+                //---
+                html = formatNumber(value)
+                if (node.innerHTML != html) node.innerHTML = html
+                //---
+                style = 'text-normal'
+                if (value != 0) style = 'text-white'
+                if (node.className != style) node.className = style
+                
+                // Item balance
+                //---
+                node = document.getElementById('selectedItem-balance')
+                //---
+                value = this.item.balance
+                //---
+                html = (value > 0 ? '+' : '') + formatNumber(value)
+                if (node.innerHTML != html) node.innerHTML = html
+                //---
+                style = 'text-normal'
+                if (value > 0) style = 'text-success'
+                else if (value < 0) style = 'text-danger'
+                if (node.className != style) node.className = style
+            }
         }
         
         //---
@@ -627,7 +622,7 @@ class PaneItem {
                     if (value == false) style += ' disabled'
                     if (node.className != style) node.className = style
                 }
-                else {
+                else if (machine.limits.length > 1) {
                     machine.limits.forEach(limit => {
                         
                         // Machine limits
