@@ -119,11 +119,11 @@ class GameMachine {
         //---
         if (recipeData.reqs) {
             if (!this.reqs) this.reqs = []
-            recipeData.reqs.forEach(id => { if (this.reqs.includes(id) == -1) this.reqs.push(id) })
+            recipeData.reqs.forEach(id => { if (this.reqs.includes(id) == false) this.reqs.push(id) })
         }
         if (machineData.reqs) {
             if (!this.reqs) this.reqs = []
-            machineData.reqs.forEach(id => { if (this.reqs.includes(id) == -1) this.reqs.push(id) })
+            machineData.reqs.forEach(id => { if (this.reqs.includes(id) == false) this.reqs.push(id) })                
         }
         //---
         this.unlocked = this.reqs ? false : true
