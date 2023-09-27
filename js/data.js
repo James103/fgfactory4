@@ -3,7 +3,7 @@ var DATA = {
     //---
     scenarios:[
         //---
-        {   id:'fto1', img:'img/fto1/', label:'fto1_', initSubTab:'objectives', initItem:'cat-armor',
+        {   id:'fto1', img:'img/fto1/', label:'fto1_', initSubTab:'objectives', initItem:'armor',
             subTabs:[
                 //---
                 {	id:'objectives',	label:'objectives',	categories:[ 'cat-armor', 'cat-equipment', 'cat-vehicle', 'cat-train', 'cat-defense', 'cat-electricity', 'cat-network', 'cat-inserter', 'cat-transport', 'cat-storage', 'cat-ammo', 'cat-weapon' ]	},
