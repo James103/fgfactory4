@@ -13,29 +13,22 @@ var TplSubTabItems = function(data) {
                         html += '<span>' + i18next.t(scenario.label + category) + '</span>'
                     html += '</div>'
                     items.forEach(item => {
-                        html += '<div class="col-12 nav-item">'
+                        html += '<div class="col-auto nav-item">'
                             html += '<button id="' + item.id + '-item-link" type="button" class="position-relative w-100 text-start nav-link' + (item.id == data.parentTab.selectedItemId ? ' active' : '') + (item.completed ? ' disabled' : '') + '" onclick="window.app.doClick(\'selectItem\', { itemId:\'' + item.id + '\' })">'
-                                html += '<div class="row gx-2 align-items-center">'
-                                    html += '<div class="col-auto lh-1">'
-                                        html += '<img src="' + scenario.img + item.img + '" width="18px" height="18px" />'
+                                html += '<img src="' + scenario.img + item.icon.img + '" width="24px" height="24px" />'
+                                if (item.category == 'cat-machine') {
+                                    let availableCount = window.app.game.getAvailableCount(item.id)
+                                    html += '<div class="position-absolute top-0 start-0">'
+                                        html += '<span id="item-' + item.id + '-availableCount" class="' + (availableCount > 0 ? 'badge text-bg-success' : 'd-none') + '">' + formatNumber(availableCount) + '</span>'
                                     html += '</div>'
-                                    html += '<div class="col">'
-                                        html += '<span>' + i18next.t(scenario.label + item.label) + '</span>'
-                                    html += '</div>'
-                                    if (item.category == 'machine') {
-                                        let availableCount = window.app.game.getAvailableCount(item.id)
-                                        html += '<div class="col-auto">'
-                                            html += '<span id="item-' + item.id + '-availableCount" class="' + (availableCount > 0 ? 'badge text-bg-success' : 'd-none') + '">' + formatNumber(availableCount) + '</span>'
-                                        html += '</div>'
-                                    }
-                                    html += '<div class="col-auto">'
-                                        html += '<span id="item-' + item.id + '-count" class="badge bg-light">' + formatNumber(item.count) + '</span>'
-                                    html += '</div>'
-                                    if (!item.completed) {
-                                        html += '<div id="item-' + item.id + '-working" class="col-auto">'
-                                        html += '</div>'
-                                    }
+                                }
+                                html += '<div class="position-absolute bottom-0 end-0">'
+                                    html += '<span id="item-' + item.id + '-count" class="badge">' + formatNumber(item.count) + '</span>'
                                 html += '</div>'
+                                if (!item.completed) {
+                                    html += '<div id="item-' + item.id + '-working" class="col-auto">'
+                                    html += '</div>'
+                                }
                             html += '</button>'
                         html += '</div>'
                     })
@@ -97,7 +90,7 @@ class SubTabItems {
                         //---
                         value = item.count
                         //---                
-                        html = '<i class="fas fa-check-circle text-success" aria-hidden="true"></i>'
+                        html = '<span class="badge"><i class="fas fa-check-circle text-success" aria-hidden="true"></i></span>'
                         if (node.innerHTML != html) node.innerHTML = html
                         //---
                         style = ''
@@ -111,18 +104,18 @@ class SubTabItems {
                         //---
                         if (item.totalMachineCount > 0 && item.balance > 0) {
                             //---
-                            html = '<i class="fas fa-arrow-up text-success" aria-hidden="true"></i>'
-                            style = 'col-auto'
+                            html = '<span class="badge"><i class="fas fa-long-arrow-alt-up text-success" aria-hidden="true"></i></span>'
+                            style = 'position-absolute top-0 end-0 lh-1'
                         }
                         else if (item.totalMachineCount > 0 && item.balance < 0) {
                             //---
-                            html = '<i class="fas fa-arrow-down text-danger" aria-hidden="true"></i>'
-                            style = 'col-auto'
+                            html = '<span class="badge"><i class="fas fa-long-arrow-alt-down text-danger" aria-hidden="true"></i></span>'
+                            style = 'position-absolute top-0 end-0 lh-1'
                         }
                         else if (item.totalMachineCount > 0 && item.balance == 0) {
                             //---
-                            html = '<i class="fas fa-arrow-up text-normal" aria-hidden="true"></i>'
-                            style = 'col-auto'
+                            html = '<span class="badge"><i class="fas fa-long-arrow-alt-up text-normal" aria-hidden="true"></i></span>'
+                            style = 'position-absolute top-0 end-0 lh-1'
                         }
                         else {
                             //---
@@ -142,13 +135,13 @@ class SubTabItems {
                         html = formatNumber(value)
                         if (node.innerHTML != html) node.innerHTML = html
                         //---
-                        style = 'badge bg-light text-normal'
-                        if (value > 0) style = 'badge bg-light text-white'
-                        if (value >= item.storage) style = 'badge bg-light text-danger'
+                        style = 'badge text-normal'
+                        if (value > 0) style = 'badge text-white'
+                        if (value >= item.storage) style = 'badge text-danger'
                         if (node.className != style) node.className = style
 
                         //---
-                        if (item.category == 'machine') {
+                        if (item.category == 'cat-machine') {
                             
                             // Item available count
                             //---

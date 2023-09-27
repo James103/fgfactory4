@@ -96,10 +96,11 @@ class GameMachine {
         this.id = machineData.id + '-' + recipeData.id
         this.machineId = machineData.id
         //---
-        let outputData = game.currentScenario.getItem(recipeData.outputId)
-        this.limits = outputData.limits
-        if (this.limits) this.limit = this.limits[0]
         this.limitCount = 0
+        if (machineData.id == 'manual' && recipeData.limits) {
+            this.limits = recipeData.limits
+            this.limit = this.limits[0]
+        }
         //---
         this.seconds = recipeData.seconds / machineData.speed
         //---
@@ -117,12 +118,12 @@ class GameMachine {
         }
         //---
         if (recipeData.reqs) {
-            if (!this.reqs) this.reqs = {}
-            for (let id in recipeData.reqs) this.reqs[id] = recipeData.reqs[id]
+            if (!this.reqs) this.reqs = []
+            recipeData.reqs.forEach(id => { if (this.reqs.includes(id) == -1) this.reqs.push(id) })
         }
         if (machineData.reqs) {
-            if (!this.reqs) this.reqs = {}
-            for (let id in machineData.reqs) this.reqs[id] = machineData.reqs[id]
+            if (!this.reqs) this.reqs = []
+            machineData.reqs.forEach(id => { if (this.reqs.includes(id) == -1) this.reqs.push(id) })
         }
         //---
         this.unlocked = this.reqs ? false : true
@@ -281,11 +282,11 @@ class Game {
         //---
         let check = true        
         //---
-        for (let id in reqs) {
+        reqs.forEach(reqId => {
             //---
-            let item = this.getItem(id)
-            if (item.count < reqs[id]) check = false
-        }
+            let item = this.getItem(reqId)
+            if (item.completed == false) check = false
+        })
         //---
         return check
     }
@@ -460,7 +461,7 @@ class Game {
         let item = this.getItem(itemId)
         //---
         let usedCount = 0
-        if (item.category == 'machine' || item.id == 'manual') usedCount = this.getMachineUsedCount(itemId)
+        if (item.category == 'cat-machine' || item.id == 'manual') usedCount = this.getMachineUsedCount(itemId)
         //---
         return item.count - usedCount
     }

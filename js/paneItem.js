@@ -14,24 +14,24 @@ var TplPaneItem = function(item) {
                 html += '</button>'
             html += '</div>'
             html += '<div class="col-auto lh-1">'
-                html += '<img src="' + scenario.img +item.img + '" width="24px" height="24px" />'
+                html += '<img src="' + scenario.img +item.icon.img + '" width="24px" height="24px" />'
             html += '</div>'
-            html += '<div class="col">'
+            html += '<div class="col-auto">'
                 html += '<span class="fs-6 text-white">' + i18next.t(scenario.label + item.label) + '</span>'
             html += '</div>'
-            if (item.category == 'machine') {
+            if (item.category == 'cat-machine') {
                 let availableCount = window.app.game.getAvailableCount(item.id)
                 html += '<div class="col-auto">'
                     html += '<span id="selectedItem-availableCount" class="' + (availableCount > 0 ? 'badge text-bg-success' : 'd-none') + '">' + formatNumber(availableCount) + '</span>'
                 html += '</div>'
             }
             if (item.completed) {
-                html += '<div class="col-auto">'
+                html += '<div class="ms-auto col-auto">'
                     html += '<i class="fas fa-check-circle text-success"></i>'
                 html += '</div>'
             }
             else {
-                html += '<div class="col-auto">'
+                html += '<div class="ms-auto col-auto">'
                     html += '<span id="selectedItem-count">' + formatNumber(item.count) + '</span>'
                     if (item.storage != Infinity) html += ' / <span id="selectedItem-storage">' + formatNumber(item.storage) + '</span>'
                     else if (item.goal) html += ' / <span>' + formatNumber(item.goal) + '</span>'
@@ -43,10 +43,10 @@ var TplPaneItem = function(item) {
         html += '<div class="scrollbar" style="height:calc(100% - 45px);">'
             html += '<div class="p-2">'
                 html += '<div class="row g-2">'
-                    html += '<div class="col-12 col-lg-6">'
+                    html += '<div class="col-12">'
                         html += '<div class="h-100 p-2 border">'
                             html += '<div class="row g-0">'
-                                if (item.category == 'machine') {
+                                if (item.category == 'cat-machine') {
                                     html += '<div class="col-12">'
                                         html += '<div class="row gx-2 align-items-center">'
                                             html += '<div class="col small">'
@@ -66,7 +66,7 @@ var TplPaneItem = function(item) {
                                                 for (let id in item.energy) {
                                                     let energyItem = game.getItem(id)
                                                     html += '<div class="col-auto lh-1">'
-                                                        html += '<img src="' + scenario.img + energyItem.img + '" width="18px" height="18px" />'
+                                                        html += '<img src="' + scenario.img + energyItem.icon.img + '" width="18px" height="18px" />'
                                                     html += '</div>'
                                                     html += '<div class="col-auto">'
                                                         html += '<span class="text-white">' + formatNumber(item.energy[id]) + ' <small class="opacity-50">/s</small></span>'
@@ -76,7 +76,7 @@ var TplPaneItem = function(item) {
                                         html += '</div>'
                                     }
                                 }
-                                else if (item.category == 'tech' || item.category == 'mission') {
+                                else if (item.category == 'cat-tech') {
                                     html += '<div class="col-12">'
                                         html += '<div class="row gx-2 align-items-center">'
                                             html += '<div class="col small">'
@@ -124,7 +124,7 @@ var TplPaneItem = function(item) {
                         html += '</div>'
                     html += '</div>'
                     if (item.storage != Infinity) {
-                        html += '<div class="col-12 col-lg-6">'
+                        html += '<div class="col-12">'
                             html += '<div class="card card-body">'
                                 html += '<div class="row g-3">'
                                     html += '<div class="col-12">'
@@ -143,7 +143,7 @@ var TplPaneItem = function(item) {
                                                 html += '<div class="border py-1 px-2">'
                                                     html += '<div class="row gx-2 align-items-center">'
                                                         html += '<div class="col-auto lh-1">'
-                                                            html += '<img src="' + scenario.img + item.img + '" width="16px" height="16px" />'
+                                                            html += '<img src="' + scenario.img + item.icon.img + '" width="16px" height="16px" />'
                                                         html += '</div>'
                                                         html += '<div class="col text-end small">'
                                                             html += '<span id="selectedItem-upgradeCost"' + (item.count < item.storage ? 'class="text-danger"' : '') + '>' + formatNumber(item.storage) + '</span>'
@@ -180,7 +180,7 @@ var TplPaneItem = function(item) {
                                                     if (machineData.id != 'manual') html += '<button type="button" class="btn btn-link p-0 fs-normal" onclick="window.app.doClick(\'selectItem\', { itemId:\'' + machineData.id + '\' })">'
                                                         html += '<div class="row gx-2 align-items-center">'
                                                             html += '<div class="col-auto lh-1">'
-                                                                html += '<img src="' + scenario.img + machineData.img + '" width="18px" height="18px" />'
+                                                                html += '<img src="' + scenario.img + machineData.icon.img + '" width="18px" height="18px" />'
                                                             html += '</div>'
                                                             html += '<div class="col-auto">'
                                                                 html += '<span class="text-white">' + i18next.t(scenario.label + machineData.label) + '</span>'
@@ -208,7 +208,7 @@ var TplPaneItem = function(item) {
                                                             html += '<button type="button" class="btn btn-light" onclick="window.app.doClick(\'selectItem\', { itemId:\'' + id + '\' })">'
                                                                 html += '<div class="row gx-2 align-items-center">'
                                                                     html += '<div class="col-auto lh-1">'
-                                                                        html += '<img src="' + scenario.img + inputItem.img + '" width="16px" height="16px" />'
+                                                                        html += '<img src="' + scenario.img + inputItem.icon.img + '" width="16px" height="16px" />'
                                                                     html += '</div>'
                                                                     html += '<div class="col text-end small">'
                                                                         html += '<span id="machine-' + machine.id + '-inputCount-' + id + '">' + formatNumber((machine.count > 0 ? machine.count : 1) * machine.inputs[id]) + '</span>'
@@ -233,7 +233,7 @@ var TplPaneItem = function(item) {
                                                     html += '<div class="border py-1 px-2">'
                                                         html += '<div class="row gx-2 align-items-center">'
                                                             html += '<div class="col-auto lh-1">'
-                                                                html += '<img src="' + scenario.img + outputItem.img + '" width="16px" height="16px" />'
+                                                                html += '<img src="' + scenario.img + outputItem.icon.img + '" width="16px" height="16px" />'
                                                             html += '</div>'
                                                             html += '<div class="col text-end small">'
                                                                 html += '<span id="machine-' + machine.id + '-outputCount">' + formatNumber((machine.count > 0 ? machine.count : 1) * machine.outputCount) + '</span>'
@@ -268,7 +268,7 @@ var TplPaneItem = function(item) {
                                                         html += '</button>'
                                                     html += '</div>'
                                                 }
-                                                else if (machine.limits.length > 1) {
+                                                else if (machine.limits && machine.limits.length > 1) {
                                                     html += '<div class="col-auto">'
                                                         html += '<div class="btn-group" role="group">'
                                                             for (let limit of machine.limits) {
@@ -306,7 +306,7 @@ var TplPaneItem = function(item) {
                     html += '</div>'
                 html += '</div>'
             }
-            if (item.category == 'machine') {
+            if (item.category == 'cat-machine') {
                 machines = window.app.game.currentMachines.filter(machine => machine.machineId == item.id && machine.count > 0)
                 if (machines.length > 0) {
                     html += '<div class="p-2">'
@@ -322,7 +322,7 @@ var TplPaneItem = function(item) {
                                                 html += '<div class="row gx-2 align-items-center">'
                                                     html += '<div class="col-auto">'
                                                         let outputElem = game.getItem(machine.outputId)
-                                                        html += '<img src="' + scenario.img + outputElem.img + '" width="16px" height="16px" />'
+                                                        html += '<img src="' + scenario.img + outputElem.icon.img + '" width="16px" height="16px" />'
                                                     html += '</div>'
                                                     html += '<div class="col">'
                                                         html += '<span class="text-white">' + i18next.t(scenario.label + outputElem.label) + '</span>'
@@ -396,7 +396,7 @@ class PaneItem {
         if (node.className != style) node.className = style
         
         //---
-        if (this.item.category == 'machine') {
+        if (this.item.category == 'cat-machine') {
             
             // Item available count
             //---
@@ -413,7 +413,7 @@ class PaneItem {
         }
         
         //---
-        if (this.item.category == 'tech') {
+        if (this.item.category == 'cat-tech') {
             
             // Item production
             //---
@@ -429,7 +429,7 @@ class PaneItem {
             if (node.className != style) node.className = style            
         }
         //---
-        else if (this.item.category != 'machine') {
+        else if (this.item.category != 'cat-machine') {
             
             // Item production
             //---
@@ -445,7 +445,7 @@ class PaneItem {
             if (node.className != style) node.className = style
             
             //---
-            if (this.item.category != 'tech' && this.item.category != 'mission') {
+            if (this.item.category != 'cat-tech') {
                 
                 // Item consumption
                 //---
@@ -622,7 +622,7 @@ class PaneItem {
                     if (value == false) style += ' disabled'
                     if (node.className != style) node.className = style
                 }
-                else if (machine.limits.length > 1) {
+                else if (machine.limits && machine.limits.length > 1) {
                     machine.limits.forEach(limit => {
                         
                         // Machine limits
