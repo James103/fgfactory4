@@ -245,8 +245,8 @@ class Game {
     //---
     load(data) {
         //---
-        if (data.victory != null) this.victory = data.victory
         if (data.scenarioId != null) this.loadScenario(data.scenarioId)
+        if (data.victory != null) { this.victory = data.victory; console.log(this.victory) }
         //---
         if (data.scenarios != null) this.scenarios.forEach(scenario => { if (data.scenarios[scenario.id]) scenario.load(data.scenarios[scenario.id]) })
         //---

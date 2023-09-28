@@ -14,7 +14,7 @@ var TplPaneItem = function(item) {
                 html += '</button>'
             html += '</div>'
             html += '<div class="col-auto lh-1">'
-                html += '<img src="' + scenario.img +item.icon.img + '" width="24px" height="24px" />'
+                html += '<img src="' + scenario.img + item.icon.img + '" width="24px" height="24px" />'
             html += '</div>'
             html += '<div class="col-auto">'
                 html += '<span class="fs-6 text-white">' + i18next.t(scenario.label + item.label) + '</span>'
@@ -66,7 +66,7 @@ var TplPaneItem = function(item) {
                                                 for (let id in item.energy) {
                                                     let energyItem = game.getItem(id)
                                                     html += '<div class="col-auto lh-1">'
-                                                        html += '<img src="' + scenario.img + energyItem.icon.img + '" width="18px" height="18px" />'
+                                                        html += displayIcon(energyItem.icon, 18)
                                                     html += '</div>'
                                                     html += '<div class="col-auto">'
                                                         html += '<span class="text-white">' + formatNumber(item.energy[id]) + ' <small class="opacity-50">/s</small></span>'
@@ -143,7 +143,7 @@ var TplPaneItem = function(item) {
                                                 html += '<div class="border py-1 px-2">'
                                                     html += '<div class="row gx-2 align-items-center">'
                                                         html += '<div class="col-auto lh-1">'
-                                                            html += '<img src="' + scenario.img + item.icon.img + '" width="16px" height="16px" />'
+                                                            html += displayIcon(item.icon, 16)
                                                         html += '</div>'
                                                         html += '<div class="col text-end small">'
                                                             html += '<span id="selectedItem-upgradeCost"' + (item.count < item.storage ? 'class="text-danger"' : '') + '>' + formatNumber(item.storage) + '</span>'
@@ -180,7 +180,7 @@ var TplPaneItem = function(item) {
                                                     if (machineData.id != 'manual') html += '<button type="button" class="btn btn-link p-0 fs-normal" onclick="window.app.doClick(\'selectItem\', { itemId:\'' + machineData.id + '\' })">'
                                                         html += '<div class="row gx-2 align-items-center">'
                                                             html += '<div class="col-auto lh-1">'
-                                                                html += '<img src="' + scenario.img + machineData.icon.img + '" width="18px" height="18px" />'
+                                                                html += displayIcon(machineData.icon, 18)
                                                             html += '</div>'
                                                             html += '<div class="col-auto">'
                                                                 html += '<span class="text-white">' + i18next.t(scenario.label + machineData.label) + '</span>'
@@ -208,7 +208,7 @@ var TplPaneItem = function(item) {
                                                             html += '<button type="button" class="btn btn-light" onclick="window.app.doClick(\'selectItem\', { itemId:\'' + id + '\' })">'
                                                                 html += '<div class="row gx-2 align-items-center">'
                                                                     html += '<div class="col-auto lh-1">'
-                                                                        html += '<img src="' + scenario.img + inputItem.icon.img + '" width="16px" height="16px" />'
+                                                                        html += displayIcon(inputItem.icon, 16)
                                                                     html += '</div>'
                                                                     html += '<div class="col text-end small">'
                                                                         html += '<span id="machine-' + machine.id + '-inputCount-' + id + '">' + formatNumber((machine.count > 0 ? machine.count : 1) * machine.inputs[id]) + '</span>'
@@ -233,7 +233,7 @@ var TplPaneItem = function(item) {
                                                     html += '<div class="border py-1 px-2">'
                                                         html += '<div class="row gx-2 align-items-center">'
                                                             html += '<div class="col-auto lh-1">'
-                                                                html += '<img src="' + scenario.img + outputItem.icon.img + '" width="16px" height="16px" />'
+                                                                html += displayIcon(outputItem.icon, 16)
                                                             html += '</div>'
                                                             html += '<div class="col text-end small">'
                                                                 html += '<span id="machine-' + machine.id + '-outputCount">' + formatNumber((machine.count > 0 ? machine.count : 1) * machine.outputCount) + '</span>'
@@ -322,7 +322,7 @@ var TplPaneItem = function(item) {
                                                 html += '<div class="row gx-2 align-items-center">'
                                                     html += '<div class="col-auto">'
                                                         let outputElem = game.getItem(machine.outputId)
-                                                        html += '<img src="' + scenario.img + outputElem.icon.img + '" width="16px" height="16px" />'
+                                                        html += displayIcon(outputElem.icon, 16)
                                                     html += '</div>'
                                                     html += '<div class="col">'
                                                         html += '<span class="text-white">' + i18next.t(scenario.label + outputElem.label) + '</span>'

@@ -15,7 +15,7 @@ var TplSubTabItems = function(data) {
                     items.forEach(item => {
                         html += '<div class="col-auto nav-item">'
                             html += '<button id="' + item.id + '-item-link" type="button" class="position-relative w-100 text-start nav-link' + (item.id == data.parentTab.selectedItemId ? ' active' : '') + (item.completed ? ' disabled' : '') + '" onclick="window.app.doClick(\'selectItem\', { itemId:\'' + item.id + '\' })">'
-                                html += '<img src="' + scenario.img + item.icon.img + '" width="24px" height="24px" />'
+                                html += displayIcon(item.icon, 24)
                                 if (item.category == 'cat-machine') {
                                     let availableCount = window.app.game.getAvailableCount(item.id)
                                     html += '<div class="position-absolute top-0 start-0">'
@@ -105,17 +105,17 @@ class SubTabItems {
                         if (item.totalMachineCount > 0 && item.balance > 0) {
                             //---
                             html = '<span class="badge"><i class="fas fa-long-arrow-alt-up text-success" aria-hidden="true"></i></span>'
-                            style = 'position-absolute top-0 end-0 lh-1'
+                            style = 'position-absolute bottom-0 start-0 lh-1'
                         }
                         else if (item.totalMachineCount > 0 && item.balance < 0) {
                             //---
                             html = '<span class="badge"><i class="fas fa-long-arrow-alt-down text-danger" aria-hidden="true"></i></span>'
-                            style = 'position-absolute top-0 end-0 lh-1'
+                            style = 'position-absolute bottom-0 start-0 lh-1'
                         }
                         else if (item.totalMachineCount > 0 && item.balance == 0) {
                             //---
                             html = '<span class="badge"><i class="fas fa-long-arrow-alt-up text-normal" aria-hidden="true"></i></span>'
-                            style = 'position-absolute top-0 end-0 lh-1'
+                            style = 'position-absolute bottom-0 start-0 lh-1'
                         }
                         else {
                             //---

@@ -3,7 +3,7 @@ var DATA = {
     //---
     scenarios:[
         //---
-        {   id:'fto1', img:'img/fto1/', label:'fto1_', initSubTab:'objectives', initItem:'armor',
+        {   id:'fto1', img:'img/fto1/', label:'fto1_', initSubTab:'objectives', initItem:'armor', victoryReqs:[ 'spidertron' ],
             subTabs:[
                 //---
                 {	id:'objectives',	label:'objectives',	categories:[ 'cat-armor', 'cat-equipment', 'cat-vehicle', 'cat-train', 'cat-defense', 'cat-electricity', 'cat-network', 'cat-inserter', 'cat-transport', 'cat-storage', 'cat-ammo', 'cat-weapon' ]	},
@@ -177,13 +177,13 @@ var DATA = {
                 {	id:'wood',	category:'cat-energy',	label:'wood',	icon:{ img:'wood.png' },	stack:100,				},
                 {	id:'coal',	category:'cat-energy',	label:'coal',	icon:{ img:'coal.png' },	stack:50,				},
                 {	id:'water',	category:'cat-energy',	label:'water',	icon:{ img:'water.png' },	stack:25000,				},
-                {	id:'steam',	category:'cat-energy',	label:'steam',	icon:{ img:'steam.png', text:'165°C' },	stack:25000,				},
+                {	id:'steam',	category:'cat-energy',	label:'steam',	icon:{ img:'steam.png' },	stack:25000,				},
                 {	id:'uranium',	category:'cat-energy',	label:'uranium',	icon:{ img:'uranium.png' },	stack:50,	reqs:[ 'uranium-tech' ],			},
                 {	id:'uranium-235',	category:'cat-energy',	label:'uranium-235',	icon:{ img:'uranium-235.png' },	stack:100,	reqs:[ 'uranium-tech' ],			},
                 {	id:'uranium-238',	category:'cat-energy',	label:'uranium-238',	icon:{ img:'uranium-238.png' },	stack:100,	reqs:[ 'uranium-tech' ],			},
                 {	id:'uranium-fuel-cell',	category:'cat-energy',	label:'uranium-fuel-cell',	icon:{ img:'uranium-fuel-cell.png' },	stack:50,	reqs:[ 'uranium-tech' ],			},
                 {	id:'heat',	category:'cat-energy',	label:'heat',	icon:{ img:'heat.png' },	stack:25000,	reqs:[ 'nuclear-energy' ],			},
-                {	id:'steam-2',	category:'cat-energy',	label:'steam-2',	icon:{ img:'steam.png', text:'500°C' },	stack:25000,	reqs:[ 'nuclear-energy' ],			},
+                {	id:'steam-2',	category:'cat-energy',	label:'steam-2',	icon:{ img:'steam-2.png' },	stack:25000,	reqs:[ 'nuclear-energy' ],			},
                 {	id:'electricity',	category:'cat-energy',	label:'electricity',	icon:{ img:'electricity.png' },	stack:5000,		},
                 //---
                 {	id:'manual',		label:'manual',	icon:{ img:'manual.png' },	stack:1,		speed:0.5,		},
@@ -205,8 +205,8 @@ var DATA = {
                 {	id:'refinery',	category:'cat-machine',	label:'refinery',	icon:{ img:'refinery.png' },	stack:10,	reqs:[ 'oil-tech' ],	speed:1,	energy:{ 'electricity':420 },	},
                 {	id:'chemical-plant',	category:'cat-machine',	label:'chemical-plant',	icon:{ img:'chemical-plant.png' },	stack:10,	reqs:[ 'oil-tech' ],	speed:1,	energy:{ 'electricity':210 },	},
                 {	id:'centrifuge',	category:'cat-machine',	label:'centrifuge',	icon:{ img:'centrifuge.png' },	stack:50,	reqs:[ 'uranium-tech' ],	speed:1,	energy:{ 'electricity':350 },	},
-                {	id:'nuclear-reactor',	category:'cat-machine',	label:'nuclear-reactor',	icon:{ img:'nuclear-reactor.png' },	stack:10,	reqs:[ 'nuclear-energy' ],	speed:1,	energy:{ 'uranium-fuel-cell':60 },	},
-                {	id:'heat-exchanger',	category:'cat-machine',	label:'heat-exchanger',	icon:{ img:'heat-exchanger.png' },	stack:50,	reqs:[ 'nuclear-energy' ],	speed:10000,	energy:{ 'heat':10000 },	},
+                {	id:'nuclear-reactor',	category:'cat-machine',	label:'nuclear-reactor',	icon:{ img:'nuclear-reactor.png' },	stack:10,	reqs:[ 'nuclear-energy' ],	speed:1,	energy:{ 'uranium-fuel-cell':0.005 },	},
+                {	id:'heat-exchanger',	category:'cat-machine',	label:'heat-exchanger',	icon:{ img:'heat-exchanger.png' },	stack:50,	reqs:[ 'nuclear-energy' ],	speed:1,	energy:{ 'heat':10000 },	},
                 {	id:'steam-turbine',	category:'cat-machine',	label:'steam-turbine',	icon:{ img:'steam-turbine.png' },	stack:10,	reqs:[ 'nuclear-energy' ],	speed:1,		},
                 {	id:'rocket-silo',	category:'cat-machine',	label:'rocket-silo',	icon:{ img:'rocket-silo.png' },	stack:1,	reqs:[ 'rocket-silo-tech' ],	speed:1,	energy:{ 'electricity':4000 },	},
                 //---
@@ -340,8 +340,8 @@ var DATA = {
                 {	id:'uranium-processing-235',	seconds:12,	outputId:'uranium-235',	outputCount:0.007,	machines:[ 'centrifuge' ],	inputs:{ 'uranium':10 },	reqs:[ 'uranium-tech' ],	},
                 {	id:'uranium-processing-238',	seconds:12,	outputId:'uranium-238',	outputCount:0.993,	machines:[ 'centrifuge' ],	inputs:{ 'uranium':10 },	reqs:[ 'uranium-tech' ],	},
                 {	id:'uranium-fuel-cell',	seconds:10,	outputId:'uranium-fuel-cell',	outputCount:10,	machines:[ 'manual', 'assembler', 'assembler-2', 'assembler-3' ],	inputs:{ 'iron-plate':10, 'uranium-235':1, 'uranium-238':19 },	limits:[ 1, 5, 10, 25 ],	reqs:[ 'uranium-tech' ],	},
-                {	id:'heat',	seconds:30,	outputId:'heat',	outputCount:1,	machines:[ 'nuclear-reactor' ],		reqs:[ 'nuclear-energy' ],	},
-                {	id:'steam-2',	seconds:30,	outputId:'steam-2',	outputCount:1,	machines:[ 'heat-exchanger' ],	inputs:{ 'water':1 },	reqs:[ 'nuclear-energy' ],	},
+                {	id:'heat',	seconds:1,	outputId:'heat',	outputCount:10000,	machines:[ 'nuclear-reactor' ],		reqs:[ 'nuclear-energy' ],	},
+                {	id:'steam-2',	seconds:1,	outputId:'steam-2',	outputCount:103,	machines:[ 'heat-exchanger' ],	inputs:{ 'water':103 },	reqs:[ 'nuclear-energy' ],	},
                 {	id:'coal-electricity',	seconds:1,	outputId:'electricity',	outputCount:900,	machines:[ 'steam-engine' ],	inputs:{ 'steam':30 },	},
                 {	id:'solar-electricity',	seconds:1,	outputId:'electricity',	outputCount:42,	machines:[ 'solar-panel' ],	reqs:[ 'solar-energy' ],	},
                 {	id:'nuclear-electricity',	seconds:1,	outputId:'electricity',	outputCount:5820,	machines:[ 'steam-turbine' ],	inputs:{ 'steam-2':60 },	reqs:[ 'nuclear-energy' ],	},

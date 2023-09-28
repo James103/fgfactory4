@@ -70,9 +70,22 @@ function formatNumber(value, fixed) {
     else if (absValue >= 1e9) { ret = (Math.floor(100 * absValue / 1e9) / 100); symbol = 'G'; }
     else if (absValue >= 1e6) { ret = (Math.floor(100 * absValue / 1e6) / 100); symbol = 'M'; }
     else if (absValue >= 1e3) { ret = (Math.floor(100 * absValue / 1e3) / 100); symbol = 'k'; }
+    else if (absValue < 1) ret = absValue
     else ret = (Math.floor(100 * absValue) / 100)
     //---
     if (fixed >= 0) ret = ret.toFixed(fixed)
     //---
     return sign + ret + (symbol ? ' <small class="opacity-50">' + symbol + '</small>' : '')
+}
+//---
+function displayIcon(icon, dim) {
+    //---
+    let scenario = window.app.game.currentScenario
+    //---
+    let html = ''
+    html += '<div class="d-inline-block position-relative">'
+        html += '<img src="' + scenario.img + icon.img + '" width="' + dim + 'px" height="' + dim + 'px" />'
+        if (icon.text) html += '<div class="position-absolute small lh-1 text-white" style="top:-0.25rem; right:-0.25rem;">' + icon.text + '</div>'
+    html += '</div>'
+    return html
 }
