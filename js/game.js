@@ -63,7 +63,7 @@ class GameItem {
     load(data) {
         //---
         if (data.count != null) this.count = data.count
-        if (data.completed != null) this.completed = data.completed
+        if (data.completed != null && this.goal) this.completed = data.completed
         if (data.upgradeCount != null) this.upgradeCount = data.upgradeCount
         //---
         this.refreshStorage()
@@ -246,7 +246,7 @@ class Game {
     load(data) {
         //---
         if (data.scenarioId != null) this.loadScenario(data.scenarioId)
-        if (data.victory != null) { this.victory = data.victory; console.log(this.victory) }
+        if (data.victory != null) this.victory = data.victory
         //---
         if (data.scenarios != null) this.scenarios.forEach(scenario => { if (data.scenarios[scenario.id]) scenario.load(data.scenarios[scenario.id]) })
         //---
