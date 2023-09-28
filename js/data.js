@@ -14,11 +14,11 @@ var DATA = {
             items:[
                 //---
                 {	id:'magazine',	category:'cat-ammo',	label:'magazine',	icon:{ img:'magazine.png' },	goal:200,				},
-                {	id:'magazine-2',	category:'cat-ammo',	label:'magazine-2',	icon:{ img:'magazine-2.png' },	goal:200,	reqs:[ 'military-2' ],			},
+                {	id:'magazine-2',	category:'cat-ammo',	label:'magazine-2',	icon:{ img:'magazine-2.png' },	stack:200,	reqs:[ 'military-2' ],			},
                 {	id:'magazine-3',	category:'cat-ammo',	label:'magazine-3',	icon:{ img:'magazine-3.png' },	goal:200,	reqs:[ 'uranium-ammo' ],			},
                 {	id:'shotgun-shell',	category:'cat-ammo',	label:'shotgun-shell',	icon:{ img:'shotgun-shell.png' },	goal:200,	reqs:[ 'military' ],			},
                 {	id:'shotgun-shell-2',	category:'cat-ammo',	label:'shotgun-shell-2',	icon:{ img:'shotgun-shell-2.png' },	goal:200,	reqs:[ 'military-4' ],			},
-                {	id:'grenade',	category:'cat-ammo',	label:'grenade',	icon:{ img:'grenade.png' },	goal:100,	reqs:[ 'military-2' ],			},
+                {	id:'grenade',	category:'cat-ammo',	label:'grenade',	icon:{ img:'grenade.png' },	stack:100,	reqs:[ 'military-2' ],			},
                 {	id:'grenade-2',	category:'cat-ammo',	label:'grenade-2',	icon:{ img:'grenade-2.png' },	goal:100,	reqs:[ 'military-4' ],			},
                 {	id:'flamethrower-ammo',	category:'cat-ammo',	label:'flamethrower-ammo',	icon:{ img:'flamethrower-ammo.png' },	goal:100,	reqs:[ 'flamethrower-tech' ],			},
                 {	id:'capsule-poison',	category:'cat-ammo',	label:'capsule-poison',	icon:{ img:'capsule-poison.png' },	goal:100,	reqs:[ 'military-3' ],			},
@@ -39,7 +39,7 @@ var DATA = {
                 {	id:'armor-5',	category:'cat-armor',	label:'armor-5',	icon:{ img:'armor-5.png' },	goal:1,	reqs:[ 'armor-5-tech' ],			},
                 //---
                 {	id:'radar',	category:'cat-defense',	label:'radar',	icon:{ img:'radar.png' },	goal:50,				},
-                {	id:'wall',	category:'cat-defense',	label:'wall',	icon:{ img:'wall.png' },	goal:100,	reqs:[ 'wall-tech' ],			},
+                {	id:'wall',	category:'cat-defense',	label:'wall',	icon:{ img:'wall.png' },	stack:100,	reqs:[ 'wall-tech' ],			},
                 {	id:'gate',	category:'cat-defense',	label:'gate',	icon:{ img:'gate.png' },	goal:50,	reqs:[ 'gate-tech' ],			},
                 {	id:'landmine',	category:'cat-defense',	label:'landmine',	icon:{ img:'landmine.png' },	goal:100,	reqs:[ 'landmine-tech' ],			},
                 {	id:'gun-turret',	category:'cat-defense',	label:'gun-turret',	icon:{ img:'gun-turret.png' },	goal:50,	reqs:[ 'gun-turret-tech' ],			},
@@ -72,7 +72,7 @@ var DATA = {
                 {	id:'personal-discharger-remote',	category:'cat-equipment',	label:'personal-discharger-remote',	icon:{ img:'personal-discharger-remote.png' },	goal:1,	reqs:[ 'personal-discharger-tech' ],			},
                 //---
                 {	id:'inserter',	category:'cat-inserter',	label:'inserter',	icon:{ img:'inserter.png' },	goal:50,				},
-                {	id:'inserter-2',	category:'cat-inserter',	label:'inserter-2',	icon:{ img:'inserter-2.png' },	goal:50,	reqs:[ 'military', 'steel-tech' ],			},
+                {	id:'inserter-2',	category:'cat-inserter',	label:'inserter-2',	icon:{ img:'inserter-2.png' },	stack:50,	reqs:[ 'military', 'steel-tech' ],			},
                 {	id:'inserter-3',	category:'cat-inserter',	label:'inserter-3',	icon:{ img:'inserter-3.png' },	goal:50,	reqs:[ 'automation' ],			},
                 {	id:'inserter-4',	category:'cat-inserter',	label:'inserter-4',	icon:{ img:'inserter-4.png' },	goal:50,	reqs:[ 'inserter-4-tech' ],			},
                 {	id:'inserter-5',	category:'cat-inserter',	label:'inserter-5',	icon:{ img:'inserter-5.png' },	goal:50,	reqs:[ 'inserter-4-tech' ],			},
@@ -88,7 +88,7 @@ var DATA = {
                 {	id:'power-switch',	category:'cat-network',	label:'power-switch',	icon:{ img:'power-switch.png' },	goal:50,	reqs:[ 'circuit-network' ],			},
                 {	id:'programmable-speaker',	category:'cat-network',	label:'programmable-speaker',	icon:{ img:'programmable-speaker.png' },	goal:50,	reqs:[ 'circuit-network' ],			},
                 //---
-                {	id:'rail',	category:'cat-train',	label:'rail',	icon:{ img:'rail.png' },	goal:100,	reqs:[ 'railway' ],			},
+                {	id:'rail',	category:'cat-train',	label:'rail',	icon:{ img:'rail.png' },	stack:100,	reqs:[ 'railway' ],			},
                 {	id:'train-stop',	category:'cat-train',	label:'train-stop',	icon:{ img:'train-stop.png' },	goal:10,	reqs:[ 'train-stop-tech' ],			},
                 {	id:'rail-signal',	category:'cat-train',	label:'rail-signal',	icon:{ img:'rail-signal.png' },	goal:50,	reqs:[ 'rail-signals' ],			},
                 {	id:'rail-chain-signal',	category:'cat-train',	label:'rail-chain-signal',	icon:{ img:'rail-chain-signal.png' },	goal:50,	reqs:[ 'rail-signals' ],			},
@@ -97,7 +97,7 @@ var DATA = {
                 {	id:'fluid-wagon',	category:'cat-train',	label:'fluid-wagon',	icon:{ img:'fluid-wagon.png' },	goal:5,	reqs:[ 'fluid-wagon-tech' ],			},
                 {	id:'artillery-wagon',	category:'cat-train',	label:'artillery-wagon',	icon:{ img:'artillery-wagon.png' },	goal:5,	reqs:[ 'artillery' ],			},
                 //---
-                {	id:'transport-belt',	category:'cat-transport',	label:'transport-belt',	icon:{ img:'transport-belt.png' },	goal:100,				},
+                {	id:'transport-belt',	category:'cat-transport',	label:'transport-belt',	icon:{ img:'transport-belt.png' },	stack:100,				},
                 {	id:'transport-belt-2',	category:'cat-transport',	label:'transport-belt-2',	icon:{ img:'transport-belt-2.png' },	goal:100,	reqs:[ 'logistics-2' ],			},
                 {	id:'transport-belt-3',	category:'cat-transport',	label:'transport-belt-3',	icon:{ img:'transport-belt-3.png' },	goal:100,	reqs:[ 'logistics-3' ],			},
                 {	id:'underground-belt',	category:'cat-transport',	label:'underground-belt',	icon:{ img:'underground-belt.png' },	goal:50,	reqs:[ 'logistics' ],			},
