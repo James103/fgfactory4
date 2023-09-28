@@ -17,8 +17,8 @@ var TplTabGame = function(data) {
                     html += '</div>'
                 }
                 html += '<div class="ms-auto col-auto d-sm-none pe-2">'
-                    html += '<button type="button" class="btn btn-outline-primary rounded-circle" onclick="window.app.doClick(\'toggleLeft\')">'
-                        html += '<i class="fas fa-arrow-right"></i>'
+                    html += '<button type="button" class="btn btn-link" onclick="window.app.doClick(\'toggleLeft\')">'
+                        html += '<i class="fas fa-arrow-alt-circle-right"></i>'
                     html += '</button>'
                 html += '</div>'
             html += '</div>'

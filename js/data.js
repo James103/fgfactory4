@@ -542,7 +542,7 @@ var DATA = {
                 {	id:'rocket-launcher',	seconds:10,	outputId:'rocket-launcher',	outputCount:1,	machines:[ 'manual' ],	inputs:{ 'iron-plate':5, 'gear':5, 'circuit':5 },	limits:[ 1 ],	reqs:[ 'rocketry' ],	},
                 //---
                 {	id:'red-pack',	seconds:5,	outputId:'red-pack',	outputCount:1,	machines:[ 'manual', 'assembler', 'assembler-2', 'assembler-3' ],	inputs:{ 'copper-plate':1, 'gear':1 },	limits:[ 1, 5, 10, 25 ],		},
-                {	id:'green-pack',	seconds:6,	outputId:'green-pack',	outputCount:1,	machines:[ 'manual', 'assembler', 'assembler-2', 'assembler-3' ],	inputs:{ 'inserter':1, 'transport-belt':1 },	limits:[ 1, 5, 10, 25 ],	reqs:[ 'green-pack-tech' ],	},
+                {	id:'green-pack',	seconds:6,	outputId:'green-pack',	outputCount:1,	machines:[ 'manual', 'assembler', 'assembler-2', 'assembler-3' ],	inputs:{ 'inserter-2':1, 'transport-belt':1 },	limits:[ 1, 5, 10, 25 ],	reqs:[ 'green-pack-tech' ],	},
                 {	id:'grey-pack',	seconds:10,	outputId:'grey-pack',	outputCount:2,	machines:[ 'manual', 'assembler', 'assembler-2', 'assembler-3' ],	inputs:{ 'magazine-2':1, 'grenade':1, 'wall':2 },	limits:[ 1, 5, 10, 25 ],	reqs:[ 'grey-pack-tech' ],	},
                 {	id:'blue-pack',	seconds:24,	outputId:'blue-pack',	outputCount:2,	machines:[ 'manual', 'assembler', 'assembler-2', 'assembler-3' ],	inputs:{ 'engine':2, 'circuit-2':3, 'sulfur':1 },	limits:[ 1, 5, 10, 25 ],	reqs:[ 'blue-pack-tech' ],	},
                 {	id:'purple-pack',	seconds:21,	outputId:'purple-pack',	outputCount:3,	machines:[ 'manual', 'assembler', 'assembler-2', 'assembler-3' ],	inputs:{ 'furnace-3':1, 'productivity-module':1, 'rail':30 },	limits:[ 1, 5, 10, 25 ],	reqs:[ 'purple-pack-tech' ],	},

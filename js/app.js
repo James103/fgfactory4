@@ -26,8 +26,6 @@ class App {
         this.selectedScreen = null
         //---
         this.game = new Game()
-        //---
-        this.newScenarioId = null
     }    
     //---
     start() {
