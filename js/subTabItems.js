@@ -14,7 +14,7 @@ var TplSubTabItems = function(data) {
                     html += '</div>'
                     items.forEach(item => {
                         html += '<div class="col-auto nav-item">'
-                            html += '<button id="' + item.id + '-item-link" type="button" class="position-relative w-100 text-start nav-link' + (item.id == data.parentTab.selectedItemId ? ' active' : '') + (item.completed ? ' disabled' : '') + '" onclick="window.app.doClick(\'selectItem\', { itemId:\'' + item.id + '\' })">'
+                            html += '<button id="' + item.id + '-item-link" type="button" class="position-relative w-100 text-start nav-link' + (item.id == data.parentTab.selectedItemId ? ' active' : '') + '" onclick="window.app.doClick(\'selectItem\', { itemId:\'' + item.id + '\' })">'
                                 html += displayIcon(item.icon, 24)
                                 if (item.category == 'cat-machine') {
                                     let availableCount = window.app.game.getAvailableCount(item.id)
@@ -25,8 +25,11 @@ var TplSubTabItems = function(data) {
                                 html += '<div class="position-absolute bottom-0 end-0">'
                                     html += '<span id="item-' + item.id + '-count" class="badge">' + formatNumber(item.count) + '</span>'
                                 html += '</div>'
-                                if (!item.completed) {
-                                    html += '<div id="item-' + item.id + '-working" class="col-auto">'
+                                html += '<div id="item-' + item.id + '-working" class="col-auto">'
+                                html += '</div>'
+                                if (item.completed) {
+                                    html += '<div class="position-absolute top-0 start-0">'
+                                        html += '<span class="badge"><i class="fas fa-check-circle text-success"></i></span>'
                                     html += '</div>'
                                 }
                             html += '</button>'
@@ -82,80 +85,63 @@ class SubTabItems {
             if (items) {
                 items.forEach(item => {
                     
-                    if (item.completed == true) {
-                        
-                        // Item count
+                    // Item working
+                    //---
+                    node = document.getElementById('item-' + item.id + '-working')
+                    //---
+                    if (item.totalMachineCount > 0 && item.balance > 0) {
                         //---
-                        node = document.getElementById('item-' + item.id + '-count')
+                        html = '<span class="badge"><i class="fas fa-long-arrow-alt-up text-success" aria-hidden="true"></i></span>'
+                        style = 'position-absolute bottom-0 start-0 lh-1'
+                    }
+                    else if (item.totalMachineCount > 0 && item.balance < 0) {
                         //---
-                        value = item.count
-                        //---                
-                        html = '<span class="badge"><i class="fas fa-check-circle text-success" aria-hidden="true"></i></span>'
-                        if (node.innerHTML != html) node.innerHTML = html
+                        html = '<span class="badge"><i class="fas fa-long-arrow-alt-down text-danger" aria-hidden="true"></i></span>'
+                        style = 'position-absolute bottom-0 start-0 lh-1'
+                    }
+                    else if (item.totalMachineCount > 0 && item.balance == 0) {
                         //---
-                        style = ''
-                        if (node.className != style) node.className = style
+                        html = '<span class="badge"><i class="fas fa-long-arrow-alt-up text-normal" aria-hidden="true"></i></span>'
+                        style = 'position-absolute bottom-0 start-0 lh-1'
                     }
                     else {
-                            
-                        // Item working
                         //---
-                        node = document.getElementById('item-' + item.id + '-working')
-                        //---
-                        if (item.totalMachineCount > 0 && item.balance > 0) {
-                            //---
-                            html = '<span class="badge"><i class="fas fa-long-arrow-alt-up text-success" aria-hidden="true"></i></span>'
-                            style = 'position-absolute bottom-0 start-0 lh-1'
-                        }
-                        else if (item.totalMachineCount > 0 && item.balance < 0) {
-                            //---
-                            html = '<span class="badge"><i class="fas fa-long-arrow-alt-down text-danger" aria-hidden="true"></i></span>'
-                            style = 'position-absolute bottom-0 start-0 lh-1'
-                        }
-                        else if (item.totalMachineCount > 0 && item.balance == 0) {
-                            //---
-                            html = '<span class="badge"><i class="fas fa-long-arrow-alt-up text-normal" aria-hidden="true"></i></span>'
-                            style = 'position-absolute bottom-0 start-0 lh-1'
-                        }
-                        else {
-                            //---
-                            html = ''
-                            style = 'd-none'
-                        }
-                        //---
-                        if (node.innerHTML != html) node.innerHTML = html
-                        if (node.className != style) node.className = style
+                        html = ''
+                        style = 'd-none'
+                    }
+                    //---
+                    if (node.innerHTML != html) node.innerHTML = html
+                    if (node.className != style) node.className = style
+                    
+                    // Item count
+                    //---
+                    node = document.getElementById('item-' + item.id + '-count')
+                    //---
+                    value = item.count
+                    //---                
+                    html = formatNumber(value)
+                    if (node.innerHTML != html) node.innerHTML = html
+                    //---
+                    style = 'badge text-normal'
+                    if (value > 0) style = 'badge text-white'
+                    if (value >= item.storage) style = 'badge text-danger'
+                    if (node.className != style) node.className = style
+
+                    //---
+                    if (item.category == 'cat-machine') {
                         
-                        // Item count
+                        // Item available count
                         //---
-                        node = document.getElementById('item-' + item.id + '-count')
+                        node = document.getElementById('item-' + item.id + '-availableCount')
                         //---
-                        value = item.count
+                        value = window.app.game.getAvailableCount(item.id)
                         //---                
                         html = formatNumber(value)
                         if (node.innerHTML != html) node.innerHTML = html
                         //---
-                        style = 'badge text-normal'
-                        if (value > 0) style = 'badge text-white'
-                        if (value >= item.storage) style = 'badge text-danger'
+                        style = 'd-none'
+                        if (value > 0) style = 'badge text-bg-success'
                         if (node.className != style) node.className = style
-
-                        //---
-                        if (item.category == 'cat-machine') {
-                            
-                            // Item available count
-                            //---
-                            node = document.getElementById('item-' + item.id + '-availableCount')
-                            //---
-                            value = window.app.game.getAvailableCount(item.id)
-                            //---                
-                            html = formatNumber(value)
-                            if (node.innerHTML != html) node.innerHTML = html
-                            //---
-                            style = 'd-none'
-                            if (value > 0) style = 'badge text-bg-success'
-                            if (node.className != style) node.className = style
-                        }
                     }
                 })
             }

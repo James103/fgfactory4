@@ -67,6 +67,8 @@ class GameItem {
         if (data.upgradeCount != null) this.upgradeCount = data.upgradeCount
         //---
         this.refreshStorage()
+        //---
+        if (this.count > this.storage) this.count = this.storage
     }
     //---
     getSaveData() {
@@ -149,6 +151,9 @@ class GameMachine {
             let outputElem = this.game.getItem(this.outputId)
             outputElem.totalMachineCount += this.count
         }
+        //---
+        if (this.machineId == 'manual') this.count = 1
+        if (this.count <= 0) this.status = 'paused'
     }
     //---
     getSaveData() {
@@ -371,15 +376,9 @@ class Game {
                     let outputElem = this.getItem(machine.outputId)
                     outputElem.count += machine.outputCount * machine.count * (1 + potential)
                     //---
-                    if (outputElem.goal && outputElem.count >= outputElem.goal) {
+                    if (outputElem.goal && !outputElem.completed && outputElem.count >= outputElem.goal) {
                         //---
                         outputElem.completed = true
-                        outputElem.totalMachineCount -= machine.count
-                        //---
-                        machine.count = 0
-                        machine.status = 'paused'
-                        machine.limitCount = 0
-                        machine.remainingSeconds = machine.seconds
                         //---
                         this.refreshUnlocked()
                         window.app.selectedScreen.display()
@@ -546,7 +545,7 @@ class Game {
         if (!machine.unlocked) return false
         //---
         if (machine.status != 'paused') return false
-        if (machine.count <= 0) return false
+        if (machine.machienId != 'manual' && machine.count <= 0) return false
         //---
         return true
     }
@@ -559,6 +558,8 @@ class Game {
             machine.status = 'wait'
             machine.limitCount = 0
             machine.remainingSeconds = machine.seconds
+            //---
+            if (machine.machineId == 'manual') machine.count = 1
         }
     }
     //---
@@ -585,6 +586,8 @@ class Game {
             machine.status = 'paused'
             machine.limitCount = 0
             machine.remainingSeconds = machine.seconds
+            //---
+            if (machine.machineId == 'manual') machine.count = 0
         }
     }
 }

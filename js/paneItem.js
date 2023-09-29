@@ -26,322 +26,318 @@ var TplPaneItem = function(item) {
                 html += '</div>'
             }
             if (item.completed) {
-                html += '<div class="ms-auto col-auto">'
+                html += '<div class="col-auto">'
                     html += '<i class="fas fa-check-circle text-success"></i>'
                 html += '</div>'
             }
-            else {
-                html += '<div class="ms-auto col-auto">'
-                    html += '<span id="selectedItem-count">' + formatNumber(item.count) + '</span>'
-                    if (item.storage != Infinity) html += ' / <span id="selectedItem-storage">' + formatNumber(item.storage) + '</span>'
-                    else if (item.goal) html += ' / <span>' + formatNumber(item.goal) + '</span>'
-                html += '</div>'
-            }
+            html += '<div class="ms-auto col-auto">'
+                html += '<span id="selectedItem-count">' + formatNumber(item.count) + '</span>'
+                if (item.storage != Infinity) html += ' / <span id="selectedItem-storage">' + formatNumber(item.storage) + '</span>'
+                else if (item.goal) html += ' / <span>' + formatNumber(item.goal) + '</span>'
+            html += '</div>'
         html += '</div>'
     html += '</div>'
-    if (!item.completed) {
-        html += '<div class="scrollbar" style="height:calc(100% - 45px);">'
-            html += '<div class="p-2">'
-                html += '<div class="row g-2">'
+    html += '<div class="scrollbar" style="height:calc(100% - 45px);">'
+        html += '<div class="p-2">'
+            html += '<div class="row g-2">'
+                html += '<div class="col-12">'
+                    html += '<div class="h-100 p-2 border">'
+                        html += '<div class="row g-0">'
+                            if (item.category == 'cat-machine') {
+                                html += '<div class="col-12">'
+                                    html += '<div class="row gx-2 align-items-center">'
+                                        html += '<div class="col small">'
+                                            html += '<span>' + i18next.t('word_speed') + '</span>'
+                                        html += '</div>'
+                                        html += '<div class="col-auto">'
+                                            html += '<span class="text-white">' + formatNumber(item.speed) + '</span>'
+                                        html += '</div>'
+                                    html += '</div>'
+                                html += '</div>'
+                                if (item.energy) {
+                                    html += '<div class="col-12">'
+                                        html += '<div class="row gx-2 align-items-center">'
+                                            html += '<div class="col small">'
+                                                html += '<span>' + i18next.t('word_energy') + '</span>'
+                                            html += '</div>'
+                                            for (let id in item.energy) {
+                                                let energyItem = game.getItem(id)
+                                                html += '<div class="col-auto lh-1">'
+                                                    html += displayIcon(energyItem.icon, 18)
+                                                html += '</div>'
+                                                html += '<div class="col-auto">'
+                                                    html += '<span class="text-white">' + formatNumber(item.energy[id]) + ' <small class="opacity-50">/s</small></span>'
+                                                html += '</div>'
+                                            }
+                                        html += '</div>'
+                                    html += '</div>'
+                                }
+                            }
+                            else if (item.category == 'cat-tech') {
+                                html += '<div class="col-12">'
+                                    html += '<div class="row gx-2 align-items-center">'
+                                        html += '<div class="col small">'
+                                            html += '<span>' + i18next.t('word_currentProd') + '</span>'
+                                        html += '</div>'
+                                        html += '<div class="col-auto">'
+                                            html += '<span id="selectedItem-prod">' + formatNumber(item.prod) + '</span> <small class="opacity-50">/s</small>'
+                                        html += '</div>'
+                                    html += '</div>'
+                                html += '</div>'
+                            }
+                            else {
+                                html += '<div class="col-12">'
+                                    html += '<div class="row gx-2 align-items-center">'
+                                        html += '<div class="col small">'
+                                            html += '<span>' + i18next.t('word_currentProd') + '</span>'
+                                        html += '</div>'
+                                        html += '<div class="col-auto">'
+                                            html += '<span id="selectedItem-prod">' + formatNumber(item.prod) + '</span> <small class="opacity-50">/s</small>'
+                                        html += '</div>'
+                                    html += '</div>'
+                                html += '</div>'
+                                html += '<div class="col-12">'
+                                    html += '<div class="row gx-2 align-items-center">'
+                                        html += '<div class="col small">'
+                                            html += '<span>' + i18next.t('word_currentConsu') + '</span>'
+                                        html += '</div>'
+                                        html += '<div class="col-auto">'
+                                            html += '<span id="selectedItem-consu">' + formatNumber(item.consu) + '</span> <small class="opacity-50">/s</small>'
+                                        html += '</div>'
+                                    html += '</div>'
+                                html += '</div>'
+                                html += '<div class="col-12">'
+                                    html += '<div class="row gx-2 align-items-center">'
+                                        html += '<div class="col small">'
+                                            html += '<span>' + i18next.t('word_currentBalance') + '</span>'
+                                        html += '</div>'
+                                        html += '<div class="col-auto">'
+                                            html += '<span id="selectedItem-balance">' + formatNumber(item.balance) + '</span> <small class="opacity-50">/s</small>'
+                                        html += '</div>'
+                                    html += '</div>'
+                                html += '</div>'
+                            }
+                        html += '</div>'
+                    html += '</div>'
+                html += '</div>'
+                if (item.storage != Infinity) {
                     html += '<div class="col-12">'
-                        html += '<div class="h-100 p-2 border">'
-                            html += '<div class="row g-0">'
-                                if (item.category == 'cat-machine') {
-                                    html += '<div class="col-12">'
-                                        html += '<div class="row gx-2 align-items-center">'
-                                            html += '<div class="col small">'
-                                                html += '<span>' + i18next.t('word_speed') + '</span>'
-                                            html += '</div>'
-                                            html += '<div class="col-auto">'
-                                                html += '<span class="text-white">' + formatNumber(item.speed) + '</span>'
-                                            html += '</div>'
-                                        html += '</div>'
-                                    html += '</div>'
-                                    if (item.energy) {
-                                        html += '<div class="col-12">'
-                                            html += '<div class="row gx-2 align-items-center">'
-                                                html += '<div class="col small">'
-                                                    html += '<span>' + i18next.t('word_energy') + '</span>'
-                                                html += '</div>'
-                                                for (let id in item.energy) {
-                                                    let energyItem = game.getItem(id)
-                                                    html += '<div class="col-auto lh-1">'
-                                                        html += displayIcon(energyItem.icon, 18)
-                                                    html += '</div>'
-                                                    html += '<div class="col-auto">'
-                                                        html += '<span class="text-white">' + formatNumber(item.energy[id]) + ' <small class="opacity-50">/s</small></span>'
-                                                    html += '</div>'
-                                                }
-                                            html += '</div>'
-                                        html += '</div>'
-                                    }
-                                }
-                                else if (item.category == 'cat-tech') {
-                                    html += '<div class="col-12">'
-                                        html += '<div class="row gx-2 align-items-center">'
-                                            html += '<div class="col small">'
-                                                html += '<span>' + i18next.t('word_currentProd') + '</span>'
-                                            html += '</div>'
-                                            html += '<div class="col-auto">'
-                                                html += '<span id="selectedItem-prod">' + formatNumber(item.prod) + '</span> <small class="opacity-50">/s</small>'
-                                            html += '</div>'
-                                        html += '</div>'
-                                    html += '</div>'
-                                }
-                                else {
-                                    html += '<div class="col-12">'
-                                        html += '<div class="row gx-2 align-items-center">'
-                                            html += '<div class="col small">'
-                                                html += '<span>' + i18next.t('word_currentProd') + '</span>'
-                                            html += '</div>'
-                                            html += '<div class="col-auto">'
-                                                html += '<span id="selectedItem-prod">' + formatNumber(item.prod) + '</span> <small class="opacity-50">/s</small>'
-                                            html += '</div>'
-                                        html += '</div>'
-                                    html += '</div>'
-                                    html += '<div class="col-12">'
-                                        html += '<div class="row gx-2 align-items-center">'
-                                            html += '<div class="col small">'
-                                                html += '<span>' + i18next.t('word_currentConsu') + '</span>'
-                                            html += '</div>'
-                                            html += '<div class="col-auto">'
-                                                html += '<span id="selectedItem-consu">' + formatNumber(item.consu) + '</span> <small class="opacity-50">/s</small>'
-                                            html += '</div>'
-                                        html += '</div>'
-                                    html += '</div>'
-                                    html += '<div class="col-12">'
-                                        html += '<div class="row gx-2 align-items-center">'
-                                            html += '<div class="col small">'
-                                                html += '<span>' + i18next.t('word_currentBalance') + '</span>'
-                                            html += '</div>'
-                                            html += '<div class="col-auto">'
-                                                html += '<span id="selectedItem-balance">' + formatNumber(item.balance) + '</span> <small class="opacity-50">/s</small>'
-                                            html += '</div>'
-                                        html += '</div>'
-                                    html += '</div>'
-                                }
-                            html += '</div>'
-                        html += '</div>'
-                    html += '</div>'
-                    if (item.storage != Infinity) {
-                        html += '<div class="col-12">'
-                            html += '<div class="card card-body">'
-                                html += '<div class="row g-3">'
-                                    html += '<div class="col-12">'
-                                        html += '<div class="row gx-2 align-items-center">'
-                                            html += '<div class="col">'
-                                                html += '<span class="text-white">' + i18next.t('word_storage') + '</span>'
-                                            html += '</div>'
-                                            html += '<div class="col-auto">'
-                                                html += '<small class="opacity-50">x</small> <span id="selectedItem-upgradeCount">' + formatNumber(item.upgradeCount) + '</span>'
-                                            html += '</div>'
-                                        html += '</div>'
-                                    html += '</div>'
-                                    html += '<div class="col-12">'
-                                        html += '<div class="row gx-2 align-items-center">'
-                                            html += '<div class="col-auto">'
-                                                html += '<div class="border py-1 px-2">'
-                                                    html += '<div class="row gx-2 align-items-center">'
-                                                        html += '<div class="col-auto lh-1">'
-                                                            html += displayIcon(item.icon, 16)
-                                                        html += '</div>'
-                                                        html += '<div class="col text-end small">'
-                                                            html += '<span id="selectedItem-upgradeCost"' + (item.count < item.storage ? 'class="text-danger"' : '') + '>' + formatNumber(item.storage) + '</span>'
-                                                        html += '</div>'
-                                                    html += '</div>'
-                                                html += '</div>'
-                                            html += '</div>'
-                                            html += '<div class="ms-auto col-auto">'
-                                                let value = game.canUpgradeItem(item)
-                                                html += '<button type="button" id="selectedItem-upgradeBtn" class="btn btn-outline-primary' + (value == false ? ' disabled' : '') + '" onclick="window.app.doClick(\'upgradeItem\', { itemId:\'' + item.id + '\' })">'
-                                                    html += '<i class="fas fa-fw fa-level-up-alt"></i>'
-                                                html += '</button>'
-                                            html += '</div>'
-                                        html += '</div>'
-                                    html += '</div>'
-                                html += '</div>'
-                            html += '</div>'
-                        html += '</div>'
-                    }
-                html += '</div>'
-            html += '</div>'
-            let machines = item.machines.filter(machine => machine.unlocked)
-            if (machines) {
-                html += '<div class="p-2">'
-                    html += '<div class="row g-2">'
-                    machines.forEach(machine => {
-                        let machineData = scenario.items.find(item => item.id == machine.machineId)
-                            html += '<div class="col-12">'
-                                html += '<div class="card card-body">'
-                                    html += '<div class="row g-3">'
-                                        html += '<div class="col-12">'
-                                            html += '<div class="row gx-2 align-items-center">'
-                                                html += '<div class="col-auto">'
-                                                    if (machineData.id != 'manual') html += '<button type="button" class="btn btn-link p-0 fs-normal" onclick="window.app.doClick(\'selectItem\', { itemId:\'' + machineData.id + '\' })">'
-                                                        html += '<div class="row gx-2 align-items-center">'
-                                                            html += '<div class="col-auto lh-1">'
-                                                                html += displayIcon(machineData.icon, 18)
-                                                            html += '</div>'
-                                                            html += '<div class="col-auto">'
-                                                                html += '<span class="text-white">' + i18next.t(scenario.label + machineData.label) + '</span>'
-                                                            html += '</div>'
-                                                        html += '</div>'
-                                                    if (machineData.id != 'manual') html += '</button>'
-                                                html += '</div>'
-                                                let availableCount = window.app.game.getAvailableCount(machine.machineId)
-                                                html += '<div id="machine-availableCount-' + machine.id + '" class="' + (availableCount > 0 ? 'col-auto' : 'd-none') + '">'
-                                                    if (availableCount > 0) html += '<span class="badge text-bg-success">' + formatNumber(availableCount) + '</span>'
-                                                html += '</div>'
-                                                if (machineData.id != 'manual') {
-                                                    html += '<div class="col text-end">'
-                                                        html += '<small class="opacity-50">x</small> <span id="machine-count-' + machine.id + '">' + formatNumber(machine.count) + '</span>'
-                                                    html += '</div>'
-                                                }
-                                            html += '</div>'
-                                        html += '</div>'
-                                        html += '<div class="col-12">'
-                                            html += '<div class="row g-1 align-items-center justify-content-center">'
-                                                if (machine.inputs) {
-                                                    for (let id in machine.inputs) {
-                                                        let inputItem = game.getItem(id)
-                                                        html += '<div class="col-auto">'
-                                                            html += '<button type="button" class="btn btn-light" onclick="window.app.doClick(\'selectItem\', { itemId:\'' + id + '\' })">'
-                                                                html += '<div class="row gx-2 align-items-center">'
-                                                                    html += '<div class="col-auto lh-1">'
-                                                                        html += displayIcon(inputItem.icon, 16)
-                                                                    html += '</div>'
-                                                                    html += '<div class="col text-end small">'
-                                                                        html += '<span id="machine-' + machine.id + '-inputCount-' + id + '">' + formatNumber((machine.count > 0 ? machine.count : 1) * machine.inputs[id]) + '</span>'
-                                                                    html += '</div>'
-                                                                html += '</div>'
-                                                            html += '</button>'
-                                                        html += '</div>'
-                                                    }
-                                                }
-                                                else {
-                                                    html += '<div class="col-auto">'
-                                                        html += '<div class="border py-1 px-2 small">'
-                                                            html += '<i class="fas fa-times-circle"></i>'
-                                                        html += '</div>'
-                                                    html += '</div>'
-                                                }
-                                                html += '<div class="col-auto small">'
-                                                    html += '<i class="fas fa-long-arrow-alt-right"></i>'
-                                                html += '</div>'
-                                                let outputItem = game.getItem(machine.outputId)
-                                                html += '<div class="col-auto">'
-                                                    html += '<div class="border py-1 px-2">'
-                                                        html += '<div class="row gx-2 align-items-center">'
-                                                            html += '<div class="col-auto lh-1">'
-                                                                html += displayIcon(outputItem.icon, 16)
-                                                            html += '</div>'
-                                                            html += '<div class="col text-end small">'
-                                                                html += '<span id="machine-' + machine.id + '-outputCount">' + formatNumber((machine.count > 0 ? machine.count : 1) * machine.outputCount) + '</span>'
-                                                            html += '</div>'
-                                                        html += '</div>'
-                                                    html += '</div>'
-                                                html += '</div>'
-                                            html += '</div>'
-                                        html += '</div>'
-                                        html += '<div class="col-12">'
-                                            html += '<div class="row gx-2 align-items-center justify-content-end">'
-                                                if (machineData.id != 'manual') {
-                                                    html += '<div class="col-auto">'
-                                                        html += '<select class="form-control" onchange="window.app.doClick(\'setMachineSelectCount\', { machineId:\'' + machine.id + '\', count:this.value })">'
-                                                            html += '<option' + (machine.selectCount == '1' ? ' selected' : '') + '  value="1">1</option>'
-                                                            html += '<option' + (machine.selectCount == '5' ? ' selected' : '') + '  value="5">5</option>'
-                                                            html += '<option' + (machine.selectCount == '10' ? ' selected' : '') + '  value="10">10</option>'
-                                                            html += '<option' + (machine.selectCount == '100' ? ' selected' : '') + '  value="100">100</option>'
-                                                            html += '<option' + (machine.selectCount == 'max' ? ' selected' : '') + '  value="max">' + i18next.t('word_max') + '</option>'
-                                                        html += '</select>'
-                                                    html += '</div>'
-                                                    html += '<div class="col-auto">'
-                                                        let value = game.canDecreaseMachineCount(machine)
-                                                        html += '<button type="button" id="machine-' + machine.id + '-decreaseBtn" class="btn btn-outline-danger' + (value == false ? ' disabled' : '') + '" onclick="window.app.doClick(\'decreaseMachineCount\', { machineId:\'' + machine.id + '\' })">'
-                                                            html += '<i class="fas fa-fw fa-minus-circle"></i>'
-                                                        html += '</button>'
-                                                    html += '</div>'
-                                                    html += '<div class="col-auto">'
-                                                        value = game.canIncreaseMachineCount(machine)
-                                                        html += '<button type="button" id="machine-' + machine.id + '-increaseBtn" class="btn btn-outline-primary' + (value == false ? ' disabled' : '') + '" onclick="window.app.doClick(\'increaseMachineCount\', { machineId:\'' + machine.id + '\' })">'
-                                                            html += '<i class="fas fa-fw fa-plus-circle"></i>'
-                                                        html += '</button>'
-                                                    html += '</div>'
-                                                }
-                                                else if (machine.limits && machine.limits.length > 1) {
-                                                    html += '<div class="col-auto">'
-                                                        html += '<div class="btn-group" role="group">'
-                                                            for (let limit of machine.limits) {
-                                                                html += '<button type="button" id="machine-' + machine.id + '-limit-' + limit + '" class="btn btn-outline-primary' + (machine.limit == limit ? ' active' : '') + '" style="width:35px;" onclick="window.app.doClick(\'setMachineLimit\', { machineId:\'' + machine.id + '\', count:' + limit + ' })">' + limit + '</button>'
-                                                            }
-                                                        html += '</div>'
-                                                    html += '</div>'
-                                                }
-                                                html += '<div class="col-auto text-end" style="width:' + (machine.machineId == 'manual' ? '85' : '60') + 'px;">'
-                                                    html += '<small id="machine-' + machine.id + '-remainingSeconds">' + formatTime(machine.remainingSeconds) + '</small>'
-                                                    html += '<div class="progress" style="height:3px;">'
-                                                        html += '<div id="machine-' + machine.id + '-progress" class="progress-bar bg-success" style="width:' + machine.getProgress() + '%;"></div>'
-                                                    html += '</div>'
-                                                html += '</div>'
-                                                html += '<div class="col-auto">'
-                                                    if (machine.status == 'paused') {
-                                                        value = game.canStartMachine(machine)
-                                                        html += '<button type="button" id="machine-' + machine.id + '-toggleBtn" class="btn btn-outline-primary' + (value == false ? ' disabled' : '') + '" onclick="window.app.doClick(\'toggleMachine\', { machineId:\'' + machine.id + '\' })">'
-                                                            html += '<i class="fas fa-fw fa-play"></i>'
-                                                        html += '</button>'
-                                                    }
-                                                    else {
-                                                        value = game.canStopMachine(machine)
-                                                        html += '<button type="button" id="machine-' + machine.id + '-toggleBtn" class="btn btn-outline-danger' + (value == false ? ' disabled' : '') + '" onclick="window.app.doClick(\'toggleMachine\', { machineId:\'' + machine.id + '\' })">'
-                                                            html += '<i class="fas fa-fw fa-stop"></i>'
-                                                        html += '</button>'
-                                                    }
-                                                html += '</div>'
-                                            html += '</div>'
-                                        html += '</div>'
-                                    html += '</div>'
-                                html += '</div>'
-                            html += '</div>'
-                        })
-                    html += '</div>'
-                html += '</div>'
-            }
-            if (item.category == 'cat-machine') {
-                machines = window.app.game.currentMachines.filter(machine => machine.machineId == item.id && machine.count > 0)
-                if (machines.length > 0) {
-                    html += '<div class="p-2">'
                         html += '<div class="card card-body">'
                             html += '<div class="row g-3">'
                                 html += '<div class="col-12">'
-                                    html += '<span class="text-white">' + i18next.t('word_assignment') + '</span>'
+                                    html += '<div class="row gx-2 align-items-center">'
+                                        html += '<div class="col">'
+                                            html += '<span class="text-white">' + i18next.t('word_storage') + '</span>'
+                                        html += '</div>'
+                                        html += '<div class="col-auto">'
+                                            html += '<small class="opacity-50">x</small> <span id="selectedItem-upgradeCount">' + formatNumber(item.upgradeCount) + '</span>'
+                                        html += '</div>'
+                                    html += '</div>'
                                 html += '</div>'
                                 html += '<div class="col-12">'
-                                    html += '<div class="list-group list-group-flush">'
-                                        machines.forEach(machine => {
-                                            html += '<button type="button" class="list-group-item list-group-item-action" onclick="window.app.doClick(\'selectItem\', { itemId:\'' + machine.outputId + '\' })">'
+                                    html += '<div class="row gx-2 align-items-center">'
+                                        html += '<div class="col-auto">'
+                                            html += '<div class="border py-1 px-2">'
                                                 html += '<div class="row gx-2 align-items-center">'
-                                                    html += '<div class="col-auto">'
-                                                        let outputElem = game.getItem(machine.outputId)
-                                                        html += displayIcon(outputElem.icon, 16)
+                                                    html += '<div class="col-auto lh-1">'
+                                                        html += displayIcon(item.icon, 16)
                                                     html += '</div>'
-                                                    html += '<div class="col">'
-                                                        html += '<span class="text-white">' + i18next.t(scenario.label + outputElem.label) + '</span>'
-                                                    html += '</div>'
-                                                    html += '<div class="col-auto">'
-                                                        html += '<small class="opacity-50">x</small> <span class="text-white">' + formatNumber(machine.count) + '</span>'
+                                                    html += '<div class="col text-end small">'
+                                                        html += '<span id="selectedItem-upgradeCost"' + (item.count < item.storage ? 'class="text-danger"' : '') + '>' + formatNumber(item.storage) + '</span>'
                                                     html += '</div>'
                                                 html += '</div>'
+                                            html += '</div>'
+                                        html += '</div>'
+                                        html += '<div class="ms-auto col-auto">'
+                                            let value = game.canUpgradeItem(item)
+                                            html += '<button type="button" id="selectedItem-upgradeBtn" class="btn btn-outline-primary' + (value == false ? ' disabled' : '') + '" onclick="window.app.doClick(\'upgradeItem\', { itemId:\'' + item.id + '\' })">'
+                                                html += '<i class="fas fa-fw fa-level-up-alt"></i>'
                                             html += '</button>'
-                                        })
+                                        html += '</div>'
                                     html += '</div>'
                                 html += '</div>'
                             html += '</div>'
                         html += '</div>'
                     html += '</div>'
                 }
-            }
+            html += '</div>'
         html += '</div>'
-    }
+        let machines = item.machines.filter(machine => machine.unlocked)
+        if (machines) {
+            html += '<div class="p-2">'
+                html += '<div class="row g-2">'
+                machines.forEach(machine => {
+                    let machineData = scenario.items.find(item => item.id == machine.machineId)
+                        html += '<div class="col-12">'
+                            html += '<div class="card card-body">'
+                                html += '<div class="row g-3">'
+                                    html += '<div class="col-12">'
+                                        html += '<div class="row gx-2 align-items-center">'
+                                            html += '<div class="col-auto">'
+                                                if (machineData.id != 'manual') html += '<button type="button" class="btn btn-link p-0 fs-normal" onclick="window.app.doClick(\'selectItem\', { itemId:\'' + machineData.id + '\' })">'
+                                                    html += '<div class="row gx-2 align-items-center">'
+                                                        html += '<div class="col-auto lh-1">'
+                                                            html += displayIcon(machineData.icon, 18)
+                                                        html += '</div>'
+                                                        html += '<div class="col-auto">'
+                                                            html += '<span class="text-white">' + i18next.t(scenario.label + machineData.label) + '</span>'
+                                                        html += '</div>'
+                                                    html += '</div>'
+                                                if (machineData.id != 'manual') html += '</button>'
+                                            html += '</div>'
+                                            let availableCount = window.app.game.getAvailableCount(machine.machineId)
+                                            html += '<div id="machine-availableCount-' + machine.id + '" class="' + (availableCount > 0 ? 'col-auto' : 'd-none') + '">'
+                                                if (availableCount > 0) html += '<span class="badge text-bg-success">' + formatNumber(availableCount) + '</span>'
+                                            html += '</div>'
+                                            if (machineData.id != 'manual') {
+                                                html += '<div class="col text-end">'
+                                                    html += '<small class="opacity-50">x</small> <span id="machine-count-' + machine.id + '">' + formatNumber(machine.count) + '</span>'
+                                                html += '</div>'
+                                            }
+                                        html += '</div>'
+                                    html += '</div>'
+                                    html += '<div class="col-12">'
+                                        html += '<div class="row g-1 align-items-center justify-content-center">'
+                                            if (machine.inputs) {
+                                                for (let id in machine.inputs) {
+                                                    let inputItem = game.getItem(id)
+                                                    html += '<div class="col-auto">'
+                                                        html += '<button type="button" class="btn btn-light" onclick="window.app.doClick(\'selectItem\', { itemId:\'' + id + '\' })">'
+                                                            html += '<div class="row gx-2 align-items-center">'
+                                                                html += '<div class="col-auto lh-1">'
+                                                                    html += displayIcon(inputItem.icon, 16)
+                                                                html += '</div>'
+                                                                html += '<div class="col text-end small">'
+                                                                    html += '<span id="machine-' + machine.id + '-inputCount-' + id + '">' + formatNumber((machine.count > 0 ? machine.count : 1) * machine.inputs[id]) + '</span>'
+                                                                html += '</div>'
+                                                            html += '</div>'
+                                                        html += '</button>'
+                                                    html += '</div>'
+                                                }
+                                            }
+                                            else {
+                                                html += '<div class="col-auto">'
+                                                    html += '<div class="border py-1 px-2 small">'
+                                                        html += '<i class="fas fa-times-circle"></i>'
+                                                    html += '</div>'
+                                                html += '</div>'
+                                            }
+                                            html += '<div class="col-auto small">'
+                                                html += '<i class="fas fa-long-arrow-alt-right"></i>'
+                                            html += '</div>'
+                                            let outputItem = game.getItem(machine.outputId)
+                                            html += '<div class="col-auto">'
+                                                html += '<div class="border py-1 px-2">'
+                                                    html += '<div class="row gx-2 align-items-center">'
+                                                        html += '<div class="col-auto lh-1">'
+                                                            html += displayIcon(outputItem.icon, 16)
+                                                        html += '</div>'
+                                                        html += '<div class="col text-end small">'
+                                                            html += '<span id="machine-' + machine.id + '-outputCount">' + formatNumber((machine.count > 0 ? machine.count : 1) * machine.outputCount) + '</span>'
+                                                        html += '</div>'
+                                                    html += '</div>'
+                                                html += '</div>'
+                                            html += '</div>'
+                                        html += '</div>'
+                                    html += '</div>'
+                                    html += '<div class="col-12">'
+                                        html += '<div class="row gx-2 align-items-center justify-content-end">'
+                                            if (machineData.id != 'manual') {
+                                                html += '<div class="col-auto">'
+                                                    html += '<select class="form-control" onchange="window.app.doClick(\'setMachineSelectCount\', { machineId:\'' + machine.id + '\', count:this.value })">'
+                                                        html += '<option' + (machine.selectCount == '1' ? ' selected' : '') + '  value="1">1</option>'
+                                                        html += '<option' + (machine.selectCount == '5' ? ' selected' : '') + '  value="5">5</option>'
+                                                        html += '<option' + (machine.selectCount == '10' ? ' selected' : '') + '  value="10">10</option>'
+                                                        html += '<option' + (machine.selectCount == '100' ? ' selected' : '') + '  value="100">100</option>'
+                                                        html += '<option' + (machine.selectCount == 'max' ? ' selected' : '') + '  value="max">' + i18next.t('word_max') + '</option>'
+                                                    html += '</select>'
+                                                html += '</div>'
+                                                html += '<div class="col-auto">'
+                                                    let value = game.canDecreaseMachineCount(machine)
+                                                    html += '<button type="button" id="machine-' + machine.id + '-decreaseBtn" class="btn btn-outline-danger' + (value == false ? ' disabled' : '') + '" onclick="window.app.doClick(\'decreaseMachineCount\', { machineId:\'' + machine.id + '\' })">'
+                                                        html += '<i class="fas fa-fw fa-minus-circle"></i>'
+                                                    html += '</button>'
+                                                html += '</div>'
+                                                html += '<div class="col-auto">'
+                                                    value = game.canIncreaseMachineCount(machine)
+                                                    html += '<button type="button" id="machine-' + machine.id + '-increaseBtn" class="btn btn-outline-primary' + (value == false ? ' disabled' : '') + '" onclick="window.app.doClick(\'increaseMachineCount\', { machineId:\'' + machine.id + '\' })">'
+                                                        html += '<i class="fas fa-fw fa-plus-circle"></i>'
+                                                    html += '</button>'
+                                                html += '</div>'
+                                            }
+                                            else if (machine.limits && machine.limits.length > 1) {
+                                                html += '<div class="col-auto">'
+                                                    html += '<div class="btn-group" role="group">'
+                                                        for (let limit of machine.limits) {
+                                                            html += '<button type="button" id="machine-' + machine.id + '-limit-' + limit + '" class="btn btn-outline-primary' + (machine.limit == limit ? ' active' : '') + '" style="width:35px;" onclick="window.app.doClick(\'setMachineLimit\', { machineId:\'' + machine.id + '\', count:' + limit + ' })">' + limit + '</button>'
+                                                        }
+                                                    html += '</div>'
+                                                html += '</div>'
+                                            }
+                                            html += '<div class="col-auto text-end" style="width:' + (machine.machineId == 'manual' ? '85' : '60') + 'px;">'
+                                                html += '<small id="machine-' + machine.id + '-remainingSeconds">' + formatTime(machine.remainingSeconds) + '</small>'
+                                                html += '<div class="progress" style="height:3px;">'
+                                                    html += '<div id="machine-' + machine.id + '-progress" class="progress-bar bg-success" style="width:' + machine.getProgress() + '%;"></div>'
+                                                html += '</div>'
+                                            html += '</div>'
+                                            html += '<div class="col-auto">'
+                                                if (machine.status == 'paused') {
+                                                    value = game.canStartMachine(machine)
+                                                    html += '<button type="button" id="machine-' + machine.id + '-toggleBtn" class="btn btn-outline-primary' + (value == false ? ' disabled' : '') + '" onclick="window.app.doClick(\'toggleMachine\', { machineId:\'' + machine.id + '\' })">'
+                                                        html += '<i class="fas fa-fw fa-play"></i>'
+                                                    html += '</button>'
+                                                }
+                                                else {
+                                                    value = game.canStopMachine(machine)
+                                                    html += '<button type="button" id="machine-' + machine.id + '-toggleBtn" class="btn btn-outline-danger' + (value == false ? ' disabled' : '') + '" onclick="window.app.doClick(\'toggleMachine\', { machineId:\'' + machine.id + '\' })">'
+                                                        html += '<i class="fas fa-fw fa-stop"></i>'
+                                                    html += '</button>'
+                                                }
+                                            html += '</div>'
+                                        html += '</div>'
+                                    html += '</div>'
+                                html += '</div>'
+                            html += '</div>'
+                        html += '</div>'
+                    })
+                html += '</div>'
+            html += '</div>'
+        }
+        if (item.category == 'cat-machine') {
+            machines = window.app.game.currentMachines.filter(machine => machine.machineId == item.id && machine.count > 0)
+            if (machines.length > 0) {
+                html += '<div class="p-2">'
+                    html += '<div class="card card-body">'
+                        html += '<div class="row g-3">'
+                            html += '<div class="col-12">'
+                                html += '<span class="text-white">' + i18next.t('word_assignment') + '</span>'
+                            html += '</div>'
+                            html += '<div class="col-12">'
+                                html += '<div class="list-group list-group-flush">'
+                                    machines.forEach(machine => {
+                                        html += '<button type="button" class="list-group-item list-group-item-action" onclick="window.app.doClick(\'selectItem\', { itemId:\'' + machine.outputId + '\' })">'
+                                            html += '<div class="row gx-2 align-items-center">'
+                                                html += '<div class="col-auto">'
+                                                    let outputElem = game.getItem(machine.outputId)
+                                                    html += displayIcon(outputElem.icon, 16)
+                                                html += '</div>'
+                                                html += '<div class="col">'
+                                                    html += '<span class="text-white">' + i18next.t(scenario.label + outputElem.label) + '</span>'
+                                                html += '</div>'
+                                                html += '<div class="col-auto">'
+                                                    html += '<small class="opacity-50">x</small> <span class="text-white">' + formatNumber(machine.count) + '</span>'
+                                                html += '</div>'
+                                            html += '</div>'
+                                        html += '</button>'
+                                    })
+                                html += '</div>'
+                            html += '</div>'
+                        html += '</div>'
+                    html += '</div>'
+                html += '</div>'
+            }
+        }
+    html += '</div>'
     //---
     return html
 }
@@ -378,9 +374,6 @@ class PaneItem {
     refresh(deltaMs) {
         //---
         let node, value, html, style
-        
-        //---
-        if (this.item.completed) return 
         
         // Item count
         //---
