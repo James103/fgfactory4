@@ -545,7 +545,7 @@ class Game {
         if (!machine.unlocked) return false
         //---
         if (machine.status != 'paused') return false
-        if (machine.machienId != 'manual' && machine.count <= 0) return false
+        if (machine.machineId != 'manual' && machine.count <= 0) return false
         //---
         return true
     }
