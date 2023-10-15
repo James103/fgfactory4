@@ -70,7 +70,7 @@ function formatNumber(value, fixed) {
     else if (absValue >= 1e9) { ret = (Math.floor(100 * absValue / 1e9) / 100); symbol = 'G'; }
     else if (absValue >= 1e6) { ret = (Math.floor(100 * absValue / 1e6) / 100); symbol = 'M'; }
     else if (absValue >= 1e3) { ret = (Math.floor(100 * absValue / 1e3) / 100); symbol = 'k'; }
-    else if (absValue < 1) ret = absValue
+    else if (absValue < 1) ret = (Math.round(1e6 * absValue) / 1e6)
     else ret = (Math.floor(100 * absValue) / 100)
     //---
     if (fixed >= 0) ret = ret.toFixed(fixed)
