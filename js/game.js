@@ -490,8 +490,6 @@ class Game {
         //---
         if (!machine.unlocked) return false
         //---
-        if (machine.status != 'paused') return false
-        //---
         let increaseCount = machine.getIncreaseCount()
         if (increaseCount <= 0) return false
         //---
@@ -505,6 +503,10 @@ class Game {
         let machine = this.getMachine(machineId)
         if (this.canIncreaseMachineCount(machine)) {
             //---
+            let machineIsRunning = (machine.status != 'paused')
+            if (this.canStopMachine(machine)) this.stopMachine(machineId)
+            if (machine.status != 'paused') return
+            //---
             let increaseCount = machine.getIncreaseCount()
             machine.count += increaseCount
             //---
@@ -512,12 +514,12 @@ class Game {
                 let outputElem = this.getItem(machine.outputId)
                 outputElem.totalMachineCount += increaseCount
             }
+            //---
+            if (machineIsRunning && this.canStartMachine(machine)) this.startMachine(machineId)
         }
     }
     //---
     canDecreaseMachineCount(machine) {
-        //---
-        if (machine.status != 'paused') return false
         //---
         let decreaseCount = machine.getDecreaseCount()
         if (machine.count < 1 || machine.count < decreaseCount) return false
@@ -530,6 +532,10 @@ class Game {
         let machine = this.getMachine(machineId)
         if (this.canDecreaseMachineCount(machine)) {
             //---
+            let machineIsRunning = (machine.status != 'paused')
+            if (this.canStopMachine(machine)) this.stopMachine(machineId)
+            if (machine.status != 'paused') return
+            //---
             let decreaseCount = machine.getDecreaseCount()
             machine.count -= decreaseCount
             //---
@@ -537,6 +543,8 @@ class Game {
                 let outputElem = this.getItem(machine.outputId)
                 outputElem.totalMachineCount -= decreaseCount
             }
+            //---
+            if (machineIsRunning && this.canStartMachine(machine)) this.startMachine(machineId)
         }
     }
     //---
